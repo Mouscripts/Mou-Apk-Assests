@@ -8,6 +8,7 @@ function check_update() {
             "type": "GET",
             "url": "https://raw.githubusercontent.com/Mouscripts/Mou-Apk-Assests/main/config.json",
             "headers": {
+                "no-cache":"no-cache",
                 "Cache-Control": "max-age=0"
             },
             "OnSuccess": "config_file"
