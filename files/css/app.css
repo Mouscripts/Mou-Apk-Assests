@@ -1,0 +1,382 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans Arabic', sans-serif;
+}
+
+body,
+button,
+a[href],
+input,
+.input_group input,
+.input_group textarea {
+    color: var(--body_text_color);
+}
+
+button {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    border: none;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    padding: 6px 16px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+button[disabled] {
+    cursor: no-drop;
+    opacity: 0.4;
+}
+
+.mou_btn {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    color: var(--first_color_text) !important;
+    padding: 4px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+    text-align: center;
+    /* border: solid 2px var(--mou_border_color2); */
+    /* background: var(--first_color_background) !important; */
+    background-image: var(--bs-gradient) !important;
+    margin-bottom: 8px;
+}
+
+.mou_btn:active {
+    transform: translateY(2px);
+}
+
+a[href] {
+    text-decoration: none;
+}
+
+.mou_background {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: -1;
+    background: rgb(var(--mou_background));
+    filter: brightness(0.8);
+}
+
+/* input container */
+input {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    background: #0000;
+    width: 100%;
+    border: 0;
+    color: var(--mou_color);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+input:focus {
+    outline: none;
+    background: #00000012;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 50000s ease-in-out 0s, color 5000s ease-in-out 0s;
+}
+
+.mou_input_container {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    border-radius: 10px;
+    color: var(--mou_color);
+
+}
+
+.mou_input_container .input {
+    position: relative;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-bottom: 0;
+    font-family: 'Noto Sans Arabic', sans-serif;
+    /* border: solid 2px var(--mou_border_color); */
+    border-radius: 10px;
+}
+
+.prepend_input {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    /* border: solid 2px var(--mou_border_color); */
+    border-radius: 10px;
+    padding: 4px 10px;
+    border-end-end-radius: 0px;
+    border-start-end-radius: 0px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.append_input {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    /* border: solid 2px var(--mou_border_color); */
+    border-radius: 10px;
+    padding: 4px 10px;
+    border-start-start-radius: 0px;
+    border-end-start-radius: 0px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+html:not([dir="rtl"]) .mou_input_container.prepend .input {
+    margin-left: -1px;
+    border-start-start-radius: 0px;
+    border-end-start-radius: 0px;
+}
+
+html:not([dir="rtl"]) .mou_input_container.append .input {
+    margin-right: -1px;
+    border-end-end-radius: 0px;
+    border-start-end-radius: 0px;
+}
+
+html[dir="rtl"] .mou_input_container.prepend .input:not(:focus) {
+    border-start-start-radius: unset;
+    border-end-start-radius: unset;
+    margin-right: -1px;
+}
+
+
+html[dir="rtl"] .mou_input_container.prepend .input.ltr:focus {
+    border-end-end-radius: unset;
+    border-start-end-radius: unset;
+    margin-right: -1px;
+}
+
+html[dir="rtl"] .mou_input_container.prepend .input:not(.ltr):focus,
+html[dir="rtl"] .mou_input_container.append .input.ltr:focus {
+    border-start-start-radius: unset;
+    border-end-start-radius: unset;
+    margin-left: -1px;
+}
+
+html[dir="rtl"] .mou_input_container.append .input:not(:focus),
+html[dir="rtl"] .mou_input_container.append .input:not(.ltr):focus {
+    border-end-end-radius: unset;
+    border-start-end-radius: unset;
+    margin-left: -1px;
+}
+
+
+.input.ltr,
+textarea.ltr {
+    text-align: left;
+    direction: ltr;
+
+}
+
+.input.ltr:focus,
+textarea.ltr:focus {
+    text-align: left;
+    direction: ltr;
+}
+
+.input.placertl::placeholder,
+textarea.placertl::placeholder {
+    text-align: right;
+}
+
+/* end input container */
+
+.mou_box_shadow {
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+    background: rgb(var(--mou_background));
+}
+
+.entire_container {
+    display: block;
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    font-size: 20px;
+    border-radius: 10px;
+    padding: 4px 20px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* 
+.full_form_container {
+    position: relative;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+} */
+
+.mou_container {
+    padding: 8px;
+    margin: 8px;
+    border-radius: 20px;
+    background: rgb(var(--mou_background) / 26%);
+    direction: rtl;
+    box-shadow: var(--mou_custom_box_shadow);
+}
+
+.full_view {
+    position: relative;
+    max-width: 1100px;
+    display: block;
+    margin: 0 auto;
+}
+
+.mou_panal {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    /* transition: 0.5s; */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    opacity: 0;
+    visibility: hidden;
+    margin-bottom: 80px;
+
+}
+
+.mou_panal.active {
+    z-index: 2;
+    animation: 0.5s linear 0s show_mou_panal;
+    animation-fill-mode: forwards;
+}
+
+.mou_panal.hiden {
+    z-index: 1;
+    opacity: 0;
+    animation: 0.2s linear 0s hide_mou_panal;
+    animation-fill-mode: forwards;
+}
+
+@keyframes show_mou_panal {
+    0% {
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    100% {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+@keyframes hide_mou_panal {
+    0% {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    100% {
+        visibility: hidden;
+        opacity: 0;
+    }
+
+}
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+}
+
+*,
+*:focus {
+    -webkit-tap-highlight-color: transparent !important;
+    user-select: none;
+    /* supported by Chrome and Opera */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+::-webkit-scrollbar {
+    /* display: none; */
+    width: 4px;
+    height: 4px;
+    background: rgb(var(--mou_background));
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: #fff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ffffffc9;
+}
+
+:root {
+    --bg-success-color: #198754;
+    --mou_border_color2: #ffffffb0;
+}
+
+:root.light {
+    --body_text_color: #000;
+    --first_color_background: #212529;
+    --first_color_text: #000;
+    --mou_background: 255, 255, 255;
+    --mou_border_color: #383c3feb;
+    --bs-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(255, 255, 255, 0));
+    --mou_custom_box_shadow: 2px 0px 10px rgb(0 0 0 / 25%), 0px 0px 10px rgb(255 255 255 / 25%), inset 5px 5px 10px rgb(36 36 36 / 50%), inset 5px 5px 20px rgb(255 255 255 / 20%), inset 0px 5px 18px rgb(255 255 255 / 75%)
+}
+
+:root.dark {
+    --mou_background: 38, 38, 38;
+    --body_text_color: rgb(255, 255, 255);
+    --first_color_background: #495057;
+    --first_color_text: rgb(255, 255, 255);
+    --mou_border_color: #ffffffb0;
+    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    --mou_custom_box_shadow: 2px 0px 10px rgb(0 0 0 / 25%), 0px 0px 10px rgb(0 0 0 / 25%), inset 5px 5px 10px rgb(36 36 36 / 50%), inset 5px 5px 20px rgb(0 0 0 / 20%), inset 0px 5px 18px rgb(0 0 0 / 75%)
+}

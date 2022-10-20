@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرئيسية</title>
+    <link rel="stylesheet" href="files/fonts/noto-sans-arabic/font.css">
+    <link rel="stylesheet" href="files/fonts/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="files/css/navigation.css">
+    <link rel="stylesheet" href="files/css/app.css">
+</head>
+
+<body>
+    <div class="mou_background"></div>
+
+    <div class="navigation_container">
+        <div class="navigation">
+            <ul>
+                <li class="list active">
+                    <a data-target_view="home">
+                        <span class="icon">
+                            <i class="fas fa-home"></i>
+                        </span>
+                        <span class="text">Home</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a data-target_view="movies">
+                        <span class="icon">
+                            <i class="fas fa-film"></i>
+                        </span>
+                        <span class="text">Movies</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a data-target_view="live">
+                        <span class="icon">
+                            <i class="far fa-tv"></i>
+                        </span>
+                        <span class="text">Live</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a data-target_view="settings">
+                        <span class="icon">
+                            <i class="fas fa-cog"></i>
+                        </span>
+                        <span class="text">Settings</span>
+                    </a>
+                </li>
+                <div class="indicator"></div>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="full_view">
+
+        <div class="mou_panal active" id="home">
+            <div class="mou_box_shadow mou_container">
+                <span class="mou_btn mou_box_shadow" id="get_config_file">Get Config File</span>
+            </div>
+        </div>
+        <div class="mou_panal" id="movies">
+            <div class="mou_box_shadow mou_container">
+
+                <span class="mou_btn mou_box_shadow" id="test_get">Test Get From Java</span>
+
+                <pre id="get_res" style="word-wrap: break-word; white-space: pre-wrap;"></pre>
+
+            </div>
+        </div>
+        <div class="mou_panal" id="live">
+            live
+        </div>
+        <div class="mou_panal" id="settings">
+            Settings
+        </div>
+    </div>
+
+
+
+    <div class="mou_box_shadow mou_container" style="display: none;">
+        <h1 class="mou_box_shadow"> مشغل فيديو Mou</h1>
+        <div class="mou_input_container prepend mou_box_shadow">
+            <div class="prepend_input mou_box_shadow"><label for="vid_name">اسم المشغل</label></div>
+            <input class="rtl input" type="text" id="vid_name" value="تجربة" />
+        </div>
+        <div class="mou_input_container prepend mou_box_shadow">
+            <div class="prepend_input mou_box_shadow"><label for="url">رابط المصدر</label></div>
+            <input class="ltr input" type="url" id="url" min="100000"
+                value="https://mouapi.herokuapp.com/videoserver/video.mp4" />
+        </div>
+
+        <div class="mou_input_container append mou_box_shadow">
+            <input class="ltr input" type="text" id="useragent" value="mou_user_agent" />
+            <div class="append_input mou_box_shadow"><label for="useragent">User-Agent</label></div>
+        </div>
+        <div class="mou_input_container append mou_box_shadow">
+            <input class="ltr input" type="text" id="referer" min="100000" value="mou_referrer" />
+            <div class="append_input mou_box_shadow"><label for="referer">Referer</label></div>
+        </div>
+        <div class="mou_input_container append mou_box_shadow">
+            <input class="ltr input" type="text" id="origin" value="mou_origin" />
+            <div class="append_input mou_box_shadow"><label for="origin">ORIGIN</label></div>
+        </div>
+
+        <span id="Play" class="mou_btn mou_box_shadow">تشغيل</span>
+        <span class="mou_btn mou_box_shadow" id="reset">Reset</span>
+        <span class="mou_btn mou_box_shadow" id="getsource1">Get stitichsports Source</span>
+        <span class="mou_btn mou_box_shadow" id="mbcmasr">MBC Masr 1 HD</span>
+    </div>
+
+
+
+    <script src="files/js/jquery.min.js"></script>
+    <script src="files/js/update_files.js"></script>
+    <script src="files/js/axois.min.js"></script>
+    <script src="files/js/app.js"></script>
+    <script src="files/js/navigation.js"></script>
+
+</body>
+
+</html>
