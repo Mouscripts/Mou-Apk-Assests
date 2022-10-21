@@ -265,7 +265,7 @@ h1 {
 }
 
 .mou_panal {
-    position: absolute;
+    position: fixed;
     width: 100%;
     top: 0;
     bottom: 0;
