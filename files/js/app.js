@@ -12,16 +12,17 @@ $("#getsource1").click(function () {
 
             vid_source = data.data[0]["items"][45]["Link"];
 
+            referer
 
             $.ajax({
                 url: vid_source,
                 type: 'GET',
                 success: function (data) {
-
-                    $("#url").val(data.data[0]["Servers"][0].Url);
+                    server_data = data.data[0]["Servers"][0];
+                    $("#url").val(server_data.Url);
                     $("#useragent").val("");
 
-                    $("#referer").val("https://gocast2.com/");
+                    $("#referer").val(server_data.Ref);
                     mouscripts.showToast("done");
                 }
             });
