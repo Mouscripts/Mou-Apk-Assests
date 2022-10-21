@@ -265,7 +265,7 @@ h1 {
 }
 
 .mou_panal {
-    position: relative;
+    position: absolute;
     width: 100%;
     top: 0;
     bottom: 0;
@@ -277,13 +277,13 @@ h1 {
 }
 
 .mou_panal.active {
+    position: relative;
     z-index: 2;
     animation: 0.5s linear 0s show_mou_panal;
     animation-fill-mode: forwards;
 }
 
 .mou_panal.hiden {
-    position: absolute;
     z-index: 1;
     opacity: 0;
     animation: 0.2s linear 0s hide_mou_panal;
