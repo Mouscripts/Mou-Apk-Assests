@@ -93,7 +93,7 @@ $("#encode").click(function () {
     $("#encoded_input").val(encoded);
 });
 $("#decode").click(function () {
-    val = $("#encode_input").val();
+    val = $("#decoded_input").val();
     encoded = mouscripts.MouPerfect(val, false);
     $("#decoded_input").val(encoded);
 });
