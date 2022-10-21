@@ -90,7 +90,6 @@ function ongetgoogle(res) {
 $("#encode").click(function () {
     val = $("#decoded_input").val();
     encoded = mouscripts.MouPerfect(val, true);
-    mouscripts.showToast(val);
     $("#encoded_input").val(encoded);
 });
 $("#decode").click(function () {
