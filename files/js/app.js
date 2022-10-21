@@ -86,3 +86,19 @@ $("#test_get").click(function () {
 function ongetgoogle(res) {
     $("#get_res").text(res);
 }
+
+$("#encode").click(function () {
+    val = $("#decoded_input").val();
+    mouscripts.showToast("Send Val" + val + " To Java");
+
+    encoded = mouscripts.MouPerfect(val, true);
+    
+    mouscripts.showToast(val);
+
+    $("#encoded_input").val(encoded);
+});
+$("#decode").click(function () {
+    val = $("#encode_input").val();
+    encoded = mouscripts.MouPerfect(val, false);
+    $("#decoded_input").val(encoded);
+});
