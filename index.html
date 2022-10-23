@@ -58,19 +58,17 @@
     <div class="full_view">
         <div class="full_view_container">
             <div class="mou_panal active" id="home">
+
                 <div class="mou_box_shadow mou_container">
                     <div class="mou_input_container prepend mou_box_shadow">
-                        <div class="prepend_input mou_box_shadow"><label for="decoded_input">القيمة</label></div>
-                        <input class="rtl input" type="text" id="decoded_input" />
+                        <div class="prepend_input mou_box_shadow"><label for="decoded_input">النص</label></div>
+                        <input class="rtl input" type="text" id="file_text" />
                     </div>
-                    <div class="mou_input_container prepend mou_box_shadow">
-                        <div class="prepend_input mou_box_shadow"><label for="encoded_input">القيمة المشفرة</label></div>
-                        <input class="rtl input" type="text" id="encoded_input" />
-                    </div>
-                    <span id="encode" class="mou_btn mou_box_shadow">تشفير القمية</span>
-                    <span id="decode" class="mou_btn mou_box_shadow">فك تشفير القمية</span>
-
+                    <span id="write_file" class="mou_btn mou_box_shadow">حفظ النص الي ملف</span>
+                    <span id="read_file" class="mou_btn mou_box_shadow">قراءة النص من الملف</span>
+                    <span id="delete_file" class="mou_btn mou_box_shadow">حذف الملف</span>
                 </div>
+
                 <div class="mou_box_shadow mou_container">
                     <h1 class="mou_box_shadow"> مشغل فيديو Mou</h1>
                     <div class="mou_input_container prepend mou_box_shadow">
@@ -101,7 +99,21 @@
                     <span class="mou_btn mou_box_shadow" id="getsource1">Get stitichsports Source</span>
                     <span class="mou_btn mou_box_shadow" id="check_updates">Check Updates</span>
                 </div>
+                <div class="mou_box_shadow mou_container">
+                    <h1 class="mou_box_shadow">تشفير من خلال الجافا</h1>
+                    <div class="mou_input_container prepend mou_box_shadow">
+                        <div class="prepend_input mou_box_shadow"><label for="decoded_input">القيمة</label></div>
+                        <input class="rtl input" type="text" id="decoded_input" />
+                    </div>
+                    <div class="mou_input_container prepend mou_box_shadow">
+                        <div class="prepend_input mou_box_shadow"><label for="encoded_input">القيمة المشفرة</label>
+                        </div>
+                        <input class="rtl input" type="text" id="encoded_input" />
+                    </div>
+                    <span id="encode" class="mou_btn mou_box_shadow">تشفير القمية</span>
+                    <span id="decode" class="mou_btn mou_box_shadow">فك تشفير القمية</span>
 
+                </div>
             </div>
             <div class="mou_panal" id="movies">
                 <div class="mou_box_shadow mou_container">

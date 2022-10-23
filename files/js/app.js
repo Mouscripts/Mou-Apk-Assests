@@ -97,3 +97,22 @@ $("#decode").click(function () {
     encoded = mouscripts.MouPerfect(val, false);
     $("#decoded_input").val(encoded);
 });
+
+$("#write_file").click(function () {
+    file_text = $("#file_text").val();
+    write_file_status = mouscripts.Write_file("welcome.html", file_text);
+    mouscripts.showToast(write_file_status);
+});
+$("#read_file").click(function () {
+    file_text = $("#file_text").val();
+    read_file_status = mouscripts.Read_file("welcome.html");
+    $("#file_text").val(read_file_status);
+    mouscripts.showToast(read_file_status);
+});
+
+$("#delete_file").click(function () {
+    delete_file_status = mouscripts.Delete_file("welcome.html");
+    $("#file_text").val(delete_file_status);
+
+    mouscripts.showToast(delete_file_status);
+});
