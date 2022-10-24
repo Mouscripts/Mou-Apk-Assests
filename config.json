@@ -1,9 +1,5 @@
 {
-    "app_version": "1.0",
+    "app_version": "2.0",
     "Latest_Apk_version": "1.0",
-    "vars": {
-        "git_hub_user": "Mouscripts",
-        "git_hub_rebo_name": "Mou-Apk-Assests",
-        "apk_link":"newapp.apk"
-    }
+    "apk_link": "newapp.apk"
 }
