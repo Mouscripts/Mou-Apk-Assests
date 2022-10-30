@@ -1,5 +1,6 @@
 {
     "app_version": "1.0",
     "Latest_Apk_version": "1.0",
-    "apk_link": "newapp.apk"
+    "apk_link": "newapp.apk",
+    "test":"mido"
 }
