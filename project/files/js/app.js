@@ -108,7 +108,7 @@ $("#reset").click(function () {
     });
 });
 $("#check_updates").click(function () {
-window.location.href = "file:///android_assets/index.html";
+window.location.href = "file:///android_asset/index.html";
 });
 function getQueryVariable(variable, meth = 1, link = "") {
     if (meth == 1) {
