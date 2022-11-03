@@ -4,16 +4,26 @@ $("[data-target_view]").click(function () {
     $("#" + target_view).addClass("active").removeClass("hiden");
 });
 
+$.MouAjax = function (params) {
+    function_token = makeid(4) + Date.now();
+    window["return_success" + function_token] = params.success;
+    req_obj = params;
+    delete req_obj.success;
+    req_obj["OnSuccess"] = "mou_ajax_" + function_token;
+    window["mou_ajax_" + function_token] = function (res, fun_name) {
+        this_function_token = /mou_ajax_(.*)/gm.exec(fun_name)[1];
+        window["return_success" + this_function_token](res);
+    }
+    mouscripts.ajax(JSON.stringify(req_obj));
+    return this;
+};
+
 $("#getsource1").click(function () {
-    $.ajax({
+    $.MouAjax({
         url: "http://mouapi.herokuapp.com/akowam/items/stitichsports.php?url=https%3A%2F%2Fstitichsports.com%2Ftv%2Fsports_tv.php&type=list",
         type: 'GET',
         success: function (data) {
-
             vid_source = data.data[0]["items"][45]["Link"];
-
-            referer
-
             $.ajax({
                 url: vid_source,
                 type: 'GET',
@@ -45,13 +55,57 @@ $("#Play").click(function () {
     mouscripts.play_vid($("#url").val(), $("#vid_name").val(), user_agent, headers);
 });
 
+function makeid(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+
+}
+
+var now_unity_rewardedAd = "";
+function show_unity_rewardedAd(adUnitId, callback) {
+    now_unity_rewardedAd = callback;
+    mouscripts.load_unity_ad(adUnitId);
+}
+
+function unity_reward_status(user_status) {
+    window["now_unity_rewardedAd"](user_status);
+}
+var unity_Interstitial_ids = ["video", "interstitial_2"];
+var unity_Interstitial_ids_will_show = 0;
+function show_unity_Interstitial() {
+
+    if (unity_Interstitial_ids.length > 0) {
+        if (typeof unity_Interstitial_ids[unity_Interstitial_ids_will_show] !== "undefined") {
+            adUnitId = unity_Interstitial_ids[unity_Interstitial_ids_will_show];
+            unity_Interstitial_ids_will_show++;
+        } else {
+            adUnitId = unity_Interstitial_ids[0];
+            unity_Interstitial_ids_will_show = 1;
+        }
+        mouscripts.load_unity_ad(adUnitId);
+    }
+
+
+}
+
 $("#reset").click(function () {
+    // show_unity_rewardedAd("Rewarded_Android", function (ad_status) {
+    //     if (ad_status == true) {
+
+    //     } else {
+
+    //     }
+    // });
+    show_unity_Interstitial();
+
     $("input").each(function () {
         $(this).val($(this).attr("value"));
     });
-});
-$("#mbcmasr").click(function () {
-    mouscripts.play_vid("https://shls-masr-ak.akamaized.net/out/v1/b7093401da27496797a8949de23f4578/index.m3u8", "MBC Masr 1 Live");
 });
 
 function getQueryVariable(variable, meth = 1, link = "") {
@@ -116,3 +170,4 @@ $("#delete_file").click(function () {
 
     mouscripts.showToast(delete_file_status);
 });
+
