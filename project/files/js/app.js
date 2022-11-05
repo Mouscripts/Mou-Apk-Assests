@@ -90,7 +90,6 @@ function show_unity_Interstitial() {
         mouscripts.load_unity_ad(adUnitId);
     }
 
-
 }
 
 $("#reset").click(function () {
