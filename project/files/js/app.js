@@ -100,7 +100,10 @@ $("#reset").click(function () {
 
     //     }
     // });
-    show_unity_Interstitial();
+    // show_unity_Interstitial();
+
+    mouscripts.Show_Admob_Interstitial(adUnitId);
+
 
     $("input").each(function () {
         $(this).val($(this).attr("value"));
