@@ -102,7 +102,7 @@ $("#reset").click(function () {
     // });
     // show_unity_Interstitial();
 
-    mouscripts.Show_Admob_Interstitial(adUnitId);
+    mouscripts.Show_Admob_Interstitial("ca-app-pub-3940256099942544/1033173712");
 
 
     $("input").each(function () {
