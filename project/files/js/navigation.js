@@ -7,8 +7,27 @@ function activeLink(elmnt, i) {
         now_navigation_link = getElementIndex(this);
         fix_indicator_positon();
     });
+    link = document.querySelectorAll(".list a")[now_navigation_link].getAttribute("data-full_iframe_target_url");
+
+    elmnt = document.getElementById("content");
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                elmnt.innerHTML = this.responseText;
+            }
+            if (this.status == 404) {
+                elmnt.innerHTML = "Page not found.";
+            }
+        }
+    }
+    xhttp.open("GET", link, true);
+    xhttp.send();
+
+
 
 }
+
 function fix_indicator_positon(animation = true) {
     navigation_width = document.querySelectorAll(".navigation ul")[0].getBoundingClientRect().width;
     navigation_link_width = document.querySelectorAll(".navigation ul li")[0].getBoundingClientRect().width;

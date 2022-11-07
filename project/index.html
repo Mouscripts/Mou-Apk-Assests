@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="files/fonts/noto-sans-arabic/font.css">
     <link rel="stylesheet" href="files/fonts/font-awesome/css/all.min.css">
     <link rel="stylesheet" href="files/css/navigation.css">
-    <link rel="stylesheet" href="files/css/app.css">
+    <link rel="stylesheet" href="files/css/main.css">
+    <link rel="stylesheet" href="files/css/index.css">
 </head>
 
 <body>
@@ -18,7 +19,7 @@
         <div class="navigation">
             <ul>
                 <li class="list active">
-                    <a data-target_view="home">
+                    <a data-full_iframe_target_url="home.html">
                         <span class="icon">
                             <i class="fas fa-home"></i>
                         </span>
@@ -26,7 +27,7 @@
                     </a>
                 </li>
                 <li class="list">
-                    <a data-target_view="movies">
+                    <a data-full_iframe_target_url="movies.html">
                         <span class="icon">
                             <i class="fas fa-film"></i>
                         </span>
@@ -34,7 +35,7 @@
                     </a>
                 </li>
                 <li class="list">
-                    <a data-target_view="live">
+                    <a data-full_iframe_target_url="live.html">
                         <span class="icon">
                             <i class="far fa-tv"></i>
                         </span>
@@ -42,7 +43,7 @@
                     </a>
                 </li>
                 <li class="list">
-                    <a data-target_view="settings">
+                    <a data-full_iframe_target_url="settings.html">
                         <span class="icon">
                             <i class="fas fa-cog"></i>
                         </span>
@@ -56,80 +57,9 @@
 
 
     <div class="full_view">
-        <div class="full_view_container">
-            <div class="mou_panal active" id="home">
+        <div class="full_view_container" id="content">
 
-                <div class="mou_box_shadow mou_container">
-                    <div class="mou_input_container prepend mou_box_shadow">
-                        <div class="prepend_input mou_box_shadow"><label for="decoded_input">النص</label></div>
-                        <input class="rtl input" type="text" id="file_text" />
-                    </div>
-                    <span id="write_file" class="mou_btn mou_box_shadow">حفظ النص الي ملف</span>
-                    <span id="read_file" class="mou_btn mou_box_shadow">قراءة النص من الملف</span>
-                    <span id="delete_file" class="mou_btn mou_box_shadow">حذف الملف</span>
-                </div>
 
-                <div class="mou_box_shadow mou_container">
-                    <h1 class="mou_box_shadow"> مشغل فيديو Mou</h1>
-                    <div class="mou_input_container prepend mou_box_shadow">
-                        <div class="prepend_input mou_box_shadow"><label for="vid_name">اسم المشغل</label></div>
-                        <input class="rtl input" type="text" id="vid_name" value="تجربة" />
-                    </div>
-                    <div class="mou_input_container prepend mou_box_shadow">
-                        <div class="prepend_input mou_box_shadow"><label for="url">رابط المصدر</label></div>
-                        <input class="ltr input" type="url" id="url" min="100000"
-                            value="https://mouapi.herokuapp.com/videoserver/video.mp4" />
-                    </div>
-
-                    <div class="mou_input_container append mou_box_shadow">
-                        <input class="ltr input" type="text" id="useragent" value="mou_user_agent" />
-                        <div class="append_input mou_box_shadow"><label for="useragent">User-Agent</label></div>
-                    </div>
-                    <div class="mou_input_container append mou_box_shadow">
-                        <input class="ltr input" type="text" id="referer" min="100000" value="mou_referrer" />
-                        <div class="append_input mou_box_shadow"><label for="referer">Referer</label></div>
-                    </div>
-                    <div class="mou_input_container append mou_box_shadow">
-                        <input class="ltr input" type="text" id="origin" value="mou_origin" />
-                        <div class="append_input mou_box_shadow"><label for="origin">ORIGIN</label></div>
-                    </div>
-
-                    <span id="Play" class="mou_btn mou_box_shadow">تشغيل</span>
-                    <span class="mou_btn mou_box_shadow" id="reset">Reset</span>
-                    <span class="mou_btn mou_box_shadow" id="getsource1">Get stitichsports Source</span>
-                    <span class="mou_btn mou_box_shadow" id="check_updates">Check Updates</span>
-                </div>
-                <div class="mou_box_shadow mou_container">
-                    <h1 class="mou_box_shadow">تشفير من خلال الجافا</h1>
-                    <div class="mou_input_container prepend mou_box_shadow">
-                        <div class="prepend_input mou_box_shadow"><label for="decoded_input">القيمة</label></div>
-                        <input class="rtl input" type="text" id="decoded_input" />
-                    </div>
-                    <div class="mou_input_container prepend mou_box_shadow">
-                        <div class="prepend_input mou_box_shadow"><label for="encoded_input">القيمة المشفرة</label>
-                        </div>
-                        <input class="rtl input" type="text" id="encoded_input" />
-                    </div>
-                    <span id="encode" class="mou_btn mou_box_shadow">تشفير القمية</span>
-                    <span id="decode" class="mou_btn mou_box_shadow">فك تشفير القمية</span>
-
-                </div>
-            </div>
-            <div class="mou_panal" id="movies">
-                <div class="mou_box_shadow mou_container">
-
-                    <span class="mou_btn mou_box_shadow" id="test_get">Test Get From Java</span>
-
-                    <pre id="get_res" style="word-wrap: break-word; white-space: pre-wrap;"></pre>
-
-                </div>
-            </div>
-            <div class="mou_panal" id="live">
-                live
-            </div>
-            <div class="mou_panal" id="settings">
-                Settings
-            </div>
         </div>
     </div>
 
@@ -137,9 +67,9 @@
 
 
     <script src="files/js/jquery.min.js"></script>
-    <script src="files/js/update_files.js"></script>
-    <script src="files/js/app.js"></script>
     <script src="files/js/navigation.js"></script>
+    <script src="files/js/main.js"></script>
+    <script src="files/js/index.js"></script>
 
 </body>
 

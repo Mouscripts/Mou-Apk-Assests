@@ -253,67 +253,6 @@ h1 {
     box-shadow: var(--mou_custom_box_shadow);
 }
 
-.full_view {
-    position: relative;
-    max-width: 1100px;
-    display: block;
-    margin: 0 auto;
-}
-
-.full_view_container {
-    padding-bottom: 110px;
-}
-
-.mou_panal {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    bottom: 0;
-    /* transition: 0.5s; */
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    opacity: 0;
-    visibility: hidden;
-}
-
-.mou_panal.active {
-    position: relative;
-    z-index: 2;
-    animation: 0.5s linear 0s show_mou_panal;
-    animation-fill-mode: forwards;
-}
-
-.mou_panal.hiden {
-    z-index: 1;
-    opacity: 0;
-    animation: 0.2s linear 0s hide_mou_panal;
-    animation-fill-mode: forwards;
-}
-
-@keyframes show_mou_panal {
-    0% {
-        visibility: hidden;
-        opacity: 0;
-    }
-
-    100% {
-        visibility: visible;
-        opacity: 1;
-    }
-}
-
-@keyframes hide_mou_panal {
-    0% {
-        visibility: visible;
-        opacity: 1;
-    }
-
-    100% {
-        visibility: hidden;
-        opacity: 0;
-    }
-
-}
 
 *,
 ::after,
