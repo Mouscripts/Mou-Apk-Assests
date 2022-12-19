@@ -75,15 +75,91 @@ $("[data-target_view]").click(function () {
 });
 
 $.MouAjax = function (params) {
-    function_token = makeid(4) + Date.now();
-    window["return_success" + function_token] = params.success;
-    req_obj = params;
-    delete req_obj.success;
-    req_obj["OnSuccess"] = "mou_ajax_" + function_token;
-    window["mou_ajax_" + function_token] = function (res, fun_name) {
-        this_function_token = /mou_ajax_(.*)/gm.exec(fun_name)[1];
-        window["return_success" + this_function_token](res);
+    var Time_Out = (typeof params.Time_Out !== "undefined" && typeof params.Time_Out !== "number") ? params.Time_Out : 10000;
+    if (typeof mouscripts !== "undefined") {
+        var args = typeof params.arguments !== "undefined" ? params.arguments : {};
+        var function_token = makeid(4) + Date.now();
+        var this_func_success = params.success;
+        var this_func_fail = params.fail;
+
+        window["return_success_" + function_token] = function (res, this_func_name) {
+            this_func_success(res, this_func_name, args);
+        };
+
+        window["return_failer_" + function_token] = function (code, msg, args, this_func_name) {
+            this_func_fail(code, msg, args, this_func_name);
+        };
+        req_obj = params;
+        delete req_obj.success;
+        delete req_obj.fail;
+
+        req_obj.headers["Cache-Control"] = "no-cache";
+
+        // alert(JSON.stringify(req_obj.headers));
+
+        req_obj["OnSuccess"] = "mou_ajax_success_" + function_token;
+        req_obj["OnFailer"] = "mou_ajax_failer_" + function_token;
+        window["mou_ajax_success_" + function_token] = function (res, fun_name) {
+            this_function_token = /mou_ajax_success_(.*)/gm.exec(fun_name)[1];
+            window["return_success_" + this_function_token](convert_byte_to_string(res));
+            clearTimeout(window["time_out_" + this_function_token]);
+        }
+        window["mou_ajax_failer_" + function_token] = function (status_code, fun_name, msg) {
+            this_function_token = /mou_ajax_failer_(.*)/gm.exec(fun_name)[1];
+            window["return_failer_" + this_function_token](status_code, msg, fun_name);
+        }
+
+        window["time_out_" + function_token] = setTimeout(() => {
+
+            window["mou_ajax_failer_" + function_token](419, "mou_ajax_failer_" + function_token, "Time Out");
+
+            window["mou_ajax_failer_" + function_token] = function () { };
+            window["mou_ajax_success_" + function_token] = function () { };
+        }, Time_Out);
+
+        mouscripts.ajax(JSON.stringify(req_obj));
+        return this;
+    } else {
+        delete params.headers;
+        $.ajax(params);
     }
-    mouscripts.ajax(JSON.stringify(req_obj));
-    return this;
+
 };
+function convert_byte_to_string(array) {
+    array = JSON.parse(array);
+    bytesView = new Uint8Array(array);
+    return new TextDecoder().decode(bytesView);
+}
+function fireWith(context, args) {
+    if (!locked) {
+        args = args || [];
+        args = [context, args.slice ? args.slice() : args];
+        queue.push(args);
+        if (!firing) {
+            fire();
+        }
+    }
+    return this;
+}
+
+function strtr(t, r, s) { var i, e, h, n, o = "", f = 0, p = 0, a = !1, c = "", g = [], l = [], u = "", b = !1; if ("object" == typeof r) { for (o in a = this.ini_set("phpjs.strictForIn", !1), r = this.krsort(r), this.ini_set("phpjs.strictForIn", a), r) r.hasOwnProperty(o) && (g.push(o), l.push(r[o])); r = g, s = l } for (i = t.length, e = r.length, h = "string" == typeof r, n = "string" == typeof s, f = 0; f < i; f++) { if (b = !1, h) { for (c = t.charAt(f), p = 0; p < e; p++)if (c == r.charAt(p)) { b = !0; break } } else for (p = 0; p < e; p++)if (t.substr(f, r[p].length) == r[p]) { b = !0, f = f + r[p].length - 1; break } u += b ? n ? s.charAt(p) : s[p] : t.charAt(f) } return u }
+
+function mou_custom_encode($txt, $num = 1) {
+    $default = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    $custom = "ZYXWVUTSRQPONMLKJIHGFEDCBAzyxwvutsrqponmlkjihgfedcba9876543210+/";
+    $encoded = escape($txt);
+    for ($i = 1; $i <= $num; $i++) {
+        $encoded = strtr(btoa($encoded), $custom, $default);
+    }
+    return $encoded.replace(/\=/g, "");;
+}
+
+function mou_custom_decode($txt, $num = 1) {
+    $default = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    $custom = "ZYXWVUTSRQPONMLKJIHGFEDCBAzyxwvutsrqponmlkjihgfedcba9876543210+/";
+    $decoded = unescape(decodeURIComponent($txt));
+    for ($i = 1; $i <= $num; $i++) {
+        $decoded = atob(strtr($decoded, $custom, $default));
+    }
+    return unescape($decoded);
+}

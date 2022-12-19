@@ -1,0 +1,330 @@
+ul.matches_container {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 8px;
+}
+
+.liga_info_container {
+    padding: 10px;
+}
+
+.liga_logo_container {
+    position: relative;
+    display: block;
+    float: right;
+    background: #fff;
+    margin-left: 8px;
+    border-radius: 5px;
+    width: 30px;
+    padding: 2px;
+    height: 34px;
+}
+
+.liga_logo {
+    display: block;
+    height: 30px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.no_liga_logo {
+    height: 100%;
+    display: block;
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("files/images/cup.png");
+}
+
+.liga_name {
+    margin-bottom: 8px;
+    padding: 4px 12px;
+    max-width: max-content;
+    border-radius: 5px;
+    border-right: solid 3px;
+}
+
+.match {
+    position: relative;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.mou_icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+    top: 4px;
+    position: relative;
+}
+
+.match .info {
+    overflow: hidden;
+    /* max-height: 0; */
+    /* height: 100%; */
+    display: none;
+
+}
+
+.match .info.slideDown {
+    animation: 0.3s ease-in slideDown;
+    animation-fill-mode: forwards;
+}
+
+.match .info.slideUp {
+    animation: 0.3s ease-out slideUp;
+    animation-fill-mode: forwards;
+}
+
+@keyframes slideDown {
+    0% {
+        max-height: 0;
+    }
+
+    100% {
+        max-height: 1000px;
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        max-height: 1000px;
+    }
+
+    100% {
+        max-height: 0;
+    }
+}
+
+.match .info ul {
+    text-align: center;
+    list-style: none;
+
+}
+
+.ch_box {
+    border-radius: 10px;
+    overflow: hidden;
+    display: block;
+    width: max-content;
+    margin: 0 auto;
+    margin-bottom: 8px;
+}
+
+.ch_box .ch_name {
+    background: #006D67;
+    display: block;
+    padding: 4px 8px;
+    color: #fff;
+}
+
+.ch_box .ch_comentator {
+    display: block;
+}
+
+ul.matches_container .mou_match {
+    display: grid;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 3fr 4fr 3fr;
+    position: relative;
+}
+
+.stad_name {
+    margin: 0 4px;
+}
+
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 90deg;
+    inherits: true;
+}
+
+ul.matches_container .match:before,
+ul.matches_container .match:after {
+    content: '';
+    position: absolute;
+    left: -3px;
+    top: -3px;
+    width: calc(100% + 6px);
+    height: calc(100% + 6px);
+    z-index: -1;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+ul.matches_container .match.animation:before,
+ul.matches_container .match.animation:after {
+    --angle: 90deg;
+    background-image: conic-gradient(from var(--angle),
+            var(--c1) 0.1turn,
+            var(--c1) 0.3turn,
+            var(--c2) 0.5turn);
+    animation: borderRotate 2.5s linear infinite forwards;
+
+}
+
+
+ul.matches_container .match.Nearstart:before,
+ul.matches_container .match.Nearstart:after {
+    --c1: rgb(255, 237, 71);
+    --c2: rgba(255, 237, 71, 0.1);
+}
+
+ul.matches_container .match.live:before,
+ul.matches_container .match.live:after {
+    --c1: rgb(255, 71, 71);
+    --c2: rgba(255, 71, 71, 0.1);
+}
+
+ul.matches_container .match.betmatch:before,
+ul.matches_container .match.betmatch:after {
+    --c1: rgba(168, 239, 255, 1);
+    --c2: rgba(168, 239, 255, 0.1);
+}
+
+
+@keyframes borderRotate {
+    100% {
+        --angle: 450deg;
+    }
+}
+
+
+ul.matches_container .mou_match:hover {
+    /* background: #151515; */
+}
+
+
+ul.matches_container .mou_match .team {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    overflow: hidden;
+}
+
+ul.matches_container .mou_match .team_1 {
+    flex-direction: row-reverse;
+}
+
+ul.matches_container .mou_match .team .team_logo {
+    margin: 0 18px;
+    width: 40px;
+    height: 40px;
+}
+
+ul.matches_container .mou_match .team .team_name {
+    text-align: center;
+    width: -webkit-fill-available;
+    overflow: auto;
+}
+
+ul.matches_container .mou_match .team .team_name::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
+}
+
+ul.matches_container .mou_match .team .team_name span {
+    width: max-content;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+ul.matches_container .mou_match .team_1 .team_name span {
+    float: left;
+}
+
+.match_center {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1fr auto 1fr;
+}
+
+.team_score {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.match_start_in {
+    text-align: center;
+    /* font-size: 1rem; */
+}
+
+.countdown {
+    margin-bottom: 1rem;
+}
+.countdown_timer {
+    color: #fff;
+}
+.countdown_timer .title {
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+
+.countdown_timer>div {
+    display: inline-block;
+    margin: 0 4px;
+    padding: 10px;
+    background: #232323;
+    border-radius: 3px;
+}
+
+.countdown_timer div .count {
+    display: inline-block;
+    padding: 6px 8px;
+    background: #333435;
+    font-family: sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1;
+    border-radius: 3px;
+}
+
+.countdown_timer .title {
+    padding-top: 10px;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.time_center {
+    text-align: center;
+    line-height: 1.5;
+}
+
+@media (max-width: 660px) {
+    ul.matches_container .mou_match .team {
+        flex-direction: column;
+    }
+
+    .team_name .loader_content {
+        margin-top: 11px;
+    }
+
+    ul.matches_container .mou_match .team .team_logo {
+        width: 30px;
+        height: 30px;
+    }
+
+    ul.matches_container .mou_match .team .team_name {
+        font-size: 0.8rem;
+    }
+
+    ul.matches_container .mou_match .team .team_name span {
+        margin: 0 auto;
+    }
+
+    ul.matches_container .mou_match .team_1 .team_name span {
+        float: unset;
+    }
+
+    .team_score {
+        font-size: 1.2rem;
+    }
+}

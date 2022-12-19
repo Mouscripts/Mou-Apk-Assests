@@ -9,12 +9,25 @@ function activeLink(elmnt, i) {
     });
     link = document.querySelectorAll(".list a")[now_navigation_link].getAttribute("data-full_iframe_target_url");
 
+    $("#header_title").text("البطل");
+
     elmnt = document.getElementById("content");
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
-                elmnt.innerHTML = this.responseText;
+                new_html = this.responseText;
+                new_html = $("<div>" + this.responseText + "</div>");
+                $("#header_actions").html("");
+                if ($(new_html).find("#header_actions").length > 0) {
+                    action_btns = $(new_html).find("#header_actions").html();
+                    $("#header_actions").html(action_btns);
+                    $(new_html).find("#header_actions").remove();
+                }
+
+
+                $("#content").html(new_html);
+                readypopups();
             }
             if (this.status == 404) {
                 elmnt.innerHTML = "Page not found.";

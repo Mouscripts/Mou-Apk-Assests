@@ -42,7 +42,7 @@ button[disabled] {
     display: block;
     text-align: center;
     /* border: solid 2px var(--mou_border_color2); */
-    /* background: var(--first_color_background) !important; */
+    background: rgb(var(--mou_background));
     background-image: var(--bs-gradient) !important;
     margin-bottom: 8px;
 }
@@ -253,6 +253,70 @@ h1 {
     box-shadow: var(--mou_custom_box_shadow);
 }
 
+.loader_content {
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.08),
+        0 -1px 3px 0 rgba(0, 0, 0, 0.06);
+    position: relative;
+    border-radius: 2px;
+    margin-bottom: 0;
+    height: 100%;
+    width: 100%;
+    min-height: 16px;
+    overflow: hidden;
+}
+
+.loader_content:only-child {
+    margin-top: 0;
+}
+
+.loader_content:before {
+    content: "";
+    height: 100%;
+    display: block;
+    box-shadow: -48px 78px 0 -48px #ededed, -51px 102px 0 -51px #ededed;
+}
+
+.loader_content:after {
+    content: "";
+    background-color: #333;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+    animation-name: loader-animate;
+    animation-timing-function: linear;
+    background: -webkit-linear-gradient(left,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.6) 30%,
+            rgba(255, 255, 255, 0) 81%);
+    background: -o-linear-gradient(left,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.6) 30%,
+            rgba(255, 255, 255, 0) 81%);
+    background: linear-gradient(to right,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.6) 30%,
+            rgba(255, 255, 255, 0) 81%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffffff', endColorstr='#00ffffff', GradientType=1);
+}
+
+
+@keyframes loader-animate {
+    0% {
+        transform: translate3d(-100%, 0, 0);
+    }
+
+    50% {
+        transform: translate3d(100%, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(-100%, 0, 0);
+    }
+}
 
 *,
 ::after,
@@ -262,17 +326,12 @@ h1 {
 
 *,
 *:focus {
-    -webkit-tap-highlight-color: transparent !important;
+    /* -webkit-tap-highlight-color: transparent !important;
     user-select: none;
-    /* supported by Chrome and Opera */
     -webkit-user-select: none;
-    /* Safari */
     -khtml-user-select: none;
-    /* Konqueror HTML */
     -moz-user-select: none;
-    /* Firefox */
-    -ms-user-select: none;
-    /* Internet Explorer/Edge */
+    -ms-user-select: none; */
 }
 
 input[type=number]::-webkit-inner-spin-button,
@@ -309,8 +368,8 @@ input[type=number]::-webkit-outer-spin-button {
     --first_color_text: #000;
     --mou_background: 255, 255, 255;
     --mou_border_color: #383c3feb;
-    --bs-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(255, 255, 255, 0));
-    --mou_custom_box_shadow: 2px 0px 10px rgb(0 0 0 / 25%), 0px 0px 10px rgb(255 255 255 / 25%), inset 5px 5px 10px rgb(36 36 36 / 50%), inset 5px 5px 20px rgb(255 255 255 / 20%), inset 0px 5px 18px rgb(255 255 255 / 75%)
+    --bs-gradient: linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(255, 255, 255, 0));
+    --mou_custom_box_shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 :root.dark {
@@ -319,6 +378,7 @@ input[type=number]::-webkit-outer-spin-button {
     --first_color_background: #495057;
     --first_color_text: rgb(255, 255, 255);
     --mou_border_color: #ffffffb0;
-    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-    --mou_custom_box_shadow: 2px 0px 10px rgb(0 0 0 / 25%), 0px 0px 10px rgb(0 0 0 / 25%), inset 5px 5px 10px rgb(36 36 36 / 50%), inset 5px 5px 20px rgb(0 0 0 / 20%), inset 0px 5px 18px rgb(0 0 0 / 75%)
+    --bs-gradient: linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    --mou_custom_box_shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
 }

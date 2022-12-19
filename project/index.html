@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="files/css/navigation.css">
     <link rel="stylesheet" href="files/css/main.css">
     <link rel="stylesheet" href="files/css/index.css">
+    <link rel="stylesheet" href="files/css/popup.css">
 </head>
 
 <body>
@@ -23,7 +24,15 @@
                         <span class="icon">
                             <i class="fas fa-home"></i>
                         </span>
-                        <span class="text">Home</span>
+                        <span class="text">الرئيسية</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a data-full_iframe_target_url="matches_table.html">
+                        <span class="icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                        <span class="text">المباريات</span>
                     </a>
                 </li>
                 <li class="list">
@@ -31,15 +40,7 @@
                         <span class="icon">
                             <i class="fas fa-film"></i>
                         </span>
-                        <span class="text">Movies</span>
-                    </a>
-                </li>
-                <li class="list">
-                    <a data-full_iframe_target_url="live.html">
-                        <span class="icon">
-                            <i class="far fa-tv"></i>
-                        </span>
-                        <span class="text">Live</span>
+                        <span class="text">الأفلام</span>
                     </a>
                 </li>
                 <li class="list">
@@ -47,7 +48,7 @@
                         <span class="icon">
                             <i class="fas fa-cog"></i>
                         </span>
-                        <span class="text">Settings</span>
+                        <span class="text">الإعدادات</span>
                     </a>
                 </li>
                 <div class="indicator"></div>
@@ -55,21 +56,33 @@
         </div>
     </div>
 
+    <div class="header">
+        <div class="header_container">
+
+            <div class="header_title_contaniner">
+                <div class="icon" style="display: none;"><i class="fas fa-bars"></i></div>
+                <div class="header_title" id="header_title">البطل</div>
+            </div>
+
+
+            <div class="header_actions" id="header_actions">
+
+            </div>
+        </div>
+    </div>
 
     <div class="full_view">
         <div class="full_view_container" id="content">
 
-
         </div>
     </div>
-
-
 
 
     <script src="files/js/jquery.min.js"></script>
     <script src="files/js/navigation.js"></script>
     <script src="files/js/main.js"></script>
     <script src="files/js/index.js"></script>
+    <script src="files/js/popup.js"></script>
 
 </body>
 

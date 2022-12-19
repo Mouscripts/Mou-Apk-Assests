@@ -1,2 +1,52 @@
 <link rel="stylesheet" href="files/css/movies.css">
-movies Page
+
+<div class="mou_popup" id="akowam_search">
+    <div class="mou_popup_container mou_box_shadow">
+        <div class="mou_popup_header">
+            <span class="mou_pop_up_title">البحث في الافلام والمسلسلات</span>
+        </div>
+        <div class="mou_popup_body">
+
+            <div class="mou_input_container prepend mou_box_shadow">
+                <div class="prepend_input"><span>كلمة البحث</span></div>
+                <input class="rtl input placertl search_key" type="text">
+            </div>
+
+        </div>
+        <div class="mou_popup_footer flex_between">
+            <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+            <button class="mou_btn mou_box_shadow" id="submit_search_in_akowam">البحث</button>
+        </div>
+    </div>
+</div>
+
+<div id="header_actions">
+    <button id="search_in_aflam"><i class="fas fa-search"></i></button>
+</div>
+
+<div class="servers_btns_container">
+
+    <button class="server_btn" onclick="load_aflam('akowam')"><i class="fas fa-film"></i> أفلام
+    </button>
+    <button class="server_btn" onclick="load_muslslat('akowam')"><i class="far fa-tv"></i> مسلسلات</button>
+
+    <button class="server_btn" onclick="load_shows('akowam')"><i class="fal fa-tv-retro"></i> تلفيزيون</button>
+
+</div>
+
+<div class="server_content" style="display: none;">
+
+    <div class="posts_ul">
+
+
+    </div>
+    <button class="load_more_btn" id="load_more_posts_btn">تحميل المزيد</button>
+
+</div>
+
+<div class="post_content" style="display: none;">
+
+
+</div>
+
+<script src="files/js/movies.js"></script>
