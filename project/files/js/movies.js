@@ -237,18 +237,18 @@ function is_elment_in_view_port(elm, top = 0, bottom = 0, left = 0, right = 0) {
 }
 
 function get_watche_servers_from_red_link(red_link) {
+
     $.ajax({
         "type": "GET",
         "url": red_link,
         success: function (watch_red_res) {
-            direct_watch_link = $(watch_red_res).find(".page-download .download-link").attr("href");
 
+            direct_watch_link = $(watch_red_res).find(".page-download .download-link").attr("href");
             $.ajax({
                 "type": "GET",
                 "url": direct_watch_link,
                 success: function (dircet_watch_res) {
                     $(".watch_sources").html("");
-                    alert(dircet_watch_res);
                     size_used = [];
 
                     $(dircet_watch_res).find("video").find("source").each(function () {
