@@ -248,7 +248,7 @@ function get_watche_servers_from_red_link(red_link) {
                 "url": direct_watch_link,
                 success: function (dircet_watch_res) {
                     $(".watch_sources").html("");
-
+                    alert(dircet_watch_res);
                     size_used = [];
 
                     $(dircet_watch_res).find("video").find("source").each(function () {
