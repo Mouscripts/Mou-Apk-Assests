@@ -149,10 +149,10 @@ ul.matches_container .match:before,
 ul.matches_container .match:after {
     content: '';
     position: absolute;
-    left: -3px;
-    top: -3px;
-    width: calc(100% + 6px);
-    height: calc(100% + 6px);
+    left: -1.5px;
+    top: -1.5px;
+    width: calc(100% + 3px);
+    height: calc(100% + 3px);
     z-index: -1;
     border-radius: 12px;
     background-color: rgba(255, 255, 255, 0.1);

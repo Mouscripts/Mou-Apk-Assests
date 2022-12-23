@@ -257,7 +257,11 @@ function show_matches(matches) {
     ready_match_click();
 }
 
-
+if (typeof timerArray !== "undefined") {
+    for (var i = 0; i < timerArray.length; i++) {
+        clearInterval(timerArray[i]);
+    }
+}
 
 var timerArray = [];
 function ready_mou_matches_timers() {

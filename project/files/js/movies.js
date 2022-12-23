@@ -18,6 +18,31 @@ function load_akowam(this_btn, link, is_search = false) {
         $("#header_title").text(title_before);
     });
 }
+
+var lazyloadThrottleTimeout;
+
+function lazyload() {
+    var lazyloadImages = $(".lazy_poster_img");
+    if (lazyloadThrottleTimeout) {
+        clearTimeout(lazyloadThrottleTimeout);
+    }
+
+    lazyloadThrottleTimeout = setTimeout(function () {
+        var scrollTop = window.pageYOffset;
+        $(".lazy_poster_img").each(function () {
+            if ($(this).offset().top < (window.innerHeight + scrollTop + 1000)) {
+                $(this).attr(`style`, `background:url(${$(this).attr("data-poster_img")}) no-repeat center center;background-size: cover`);
+                $(this).removeClass('lazy_poster_img');
+            }
+        });
+        if (lazyloadImages.length == 0) {
+            document.removeEventListener("scroll", lazyload);
+            window.removeEventListener("resize", lazyload);
+            window.removeEventListener("orientationChange", lazyload);
+        }
+    }, 20);
+}
+
 var loading_posts = false;
 function load_akoam_posts(url, is_search = false) {
     if (loading_posts == false) {
@@ -36,8 +61,7 @@ function load_akoam_posts(url, is_search = false) {
 
 
                     post_div = `<a class="vide_container my_box_shadow" data-film_url="${post_url}"><span
-                class="vide_thump"
-                style="background:url(${post_img}) no-repeat center center;background-size: cover"></span>
+                class="vide_thump lazy_poster_img" data-poster_img="${post_img}"></span>
             <div class="vide_disc">
                 <div class="about_vid">
                     <div class="vid_detailes_container">
@@ -53,7 +77,6 @@ function load_akoam_posts(url, is_search = false) {
                             $(".posts_ul").append(post_div);
                         }
                     } else {
-
                         $(".posts_ul").append(post_div);
                     }
 
@@ -67,6 +90,12 @@ function load_akoam_posts(url, is_search = false) {
                     next_page_url = $(res_html).find(".pagination .page-link[rel='next']").attr("href");
                     $("#load_more_posts_btn").attr("onclick", `load_akoam_posts('${next_page_url}',${is_search})`);
                 }
+
+                lazyload();
+                document.addEventListener("scroll", lazyload);
+                window.addEventListener("resize", lazyload);
+                window.addEventListener("orientationChange", lazyload);
+
 
                 $(document).off("scroll");
                 $(document).scroll(function () {
@@ -97,7 +126,6 @@ function load_akoam_posts(url, is_search = false) {
                     $(".server_content").hide();
                     $(".post_content").show();
                     film_url = $(this).attr("data-film_url");
-                    post_type = (film_url.includes("/series/") || film_url.includes("/shows/")) ? "series" : "film";
                     this_epo_num = false;
                     $.ajax({
                         "type": "GET",
@@ -108,8 +136,9 @@ function load_akoam_posts(url, is_search = false) {
                             vid_title = $(res_html).find(".movie-cover h1.entry-title").text();
                             vid_img = $(res_html).find(".movie-cover img").attr("src");
 
-                            table_trs = ``;
+                            post_type = (film_url.includes("/series/") || $(res_html).find(".header-tabs-container").length == 0) ? "series" : "film";
 
+                            table_trs = ``;
                             for (i = 0; i < $(res_html).find(".movie-cover .col-lg-7 div.mt-2").length; i++) {
                                 if (i == 0) {
                                     continue;
@@ -337,8 +366,9 @@ function show_akoam_cats(cat = "movies") {
 
     back_buttons_functions.unshift(function () {
         $(".servers_btns_container").html(`<button class="server_btn" onclick="load_aflam('akowam')"><i class="fas fa-film"></i> أفلام
-</button>
-<button class="server_btn" onclick="load_muslslat('akowam')"><i class="far fa-tv"></i> مسلسلات</button>`);
+        </button>
+        <button class="server_btn" onclick="load_muslslat('akowam')"><i class="far fa-tv"></i> مسلسلات</button>
+        <button class="server_btn" onclick="load_shows('akowam')"><i class="fal fa-tv-retro"></i> تلفزيون</button>`);
     });
 }
 

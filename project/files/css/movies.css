@@ -53,7 +53,7 @@
     display: inline-block;
     overflow: hidden;
     /* border: solid 2px; */
-    border-radius: 2px;
+    border-radius: 4px;
 }
 
 .vide_thump:before {
