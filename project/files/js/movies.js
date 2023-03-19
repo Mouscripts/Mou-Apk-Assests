@@ -1,3 +1,12 @@
+$(document).ajaxSuccess(function (event, xhr, settings) {
+
+}).ajaxError(function (event, jqxhr, settings, thrownError) {
+    if (jqxhr.status == 403) {
+        settings.url = "https://webcache.googleusercontent.com/search?q=cache:" + settings.url;
+        $.ajax(settings);
+    }
+});
+
 var search_key = "";
 function load_akowam(this_btn, link, is_search = false) {
     $(".servers_btns_container").hide();
@@ -60,7 +69,7 @@ function load_akoam_posts(url, is_search = false) {
                     post_img = $(this).find(".entry-image img").attr("data-src");
 
 
-                    post_div = `<a class="vide_container my_box_shadow" data-film_url="${post_url}"><span
+                    post_div = `<a class="vide_container my_box_shadow" data-film_title="${post_title}" data-film_url="${post_url}"><span
                 class="vide_thump lazy_poster_img" data-poster_img="${post_img}"></span>
             <div class="vide_disc">
                 <div class="about_vid">
@@ -175,6 +184,10 @@ function load_akoam_posts(url, is_search = false) {
                         <div class="mou_vid_container" id="msader_elmoshda">
                             <h5 class="header-title">مصادر المشاهدة</h5>
                             <div class="watch_sources"></div>
+                        </div>
+                        <div class="mou_vid_container" id="msader_eltahmel">
+                            <h5 class="header-title">التحميل</h5>
+                            <div class="download_sources"></div>
                         </div>`;
 
                             $(".post_content").html(post_html);
@@ -183,7 +196,7 @@ function load_akoam_posts(url, is_search = false) {
                             if (post_type == "series") {
 
                                 $("#hlakat_elmoslsal_container").show();
-                                $("#msader_elmoshda").hide();
+                                $("#msader_elmoshda,#msader_eltahmel").hide();
 
                                 $("#eposids_num").text(` ( ${$(res_html).find("#series-episodes , #show-episodes").find(".col-12").length} ) `);
                                 $(res_html).find("#series-episodes , #show-episodes").find(".col-12").each(function () {
@@ -195,8 +208,8 @@ function load_akoam_posts(url, is_search = false) {
                                     $(".mou_eps_num").removeClass("active");
                                     $(this).addClass("active");
 
-                                    $("#msader_elmoshda").show();
-                                    $(".watch_sources").html(`<span><i class="fas fa-circle-notch fa-spin fa-lg"></i> جاري التحميل</span>`);
+                                    $("#msader_elmoshda,#msader_eltahmel").show();
+                                    $(".watch_sources,.download_sources").html(`<span><i class="fas fa-circle-notch fa-spin fa-lg"></i> جاري التحميل</span>`);
 
                                     this_epo_num = $(this).find("em").text();
                                     this_epo_link = $(this).attr("data-epo_link");
@@ -214,7 +227,7 @@ function load_akoam_posts(url, is_search = false) {
 
                             } else {
 
-                                $(".watch_sources").html(`<span><i class="fas fa-circle-notch fa-spin fa-lg"></i> جاري التحميل</span>`);
+                                $(".watch_sources,.download_sources").html(`<span><i class="fas fa-circle-notch fa-spin fa-lg"></i> جاري التحميل</span>`);
 
                                 watch_red_url = $(res_html).find(".qualities a.link-btn").attr("href");
                                 get_watche_servers_from_red_link(watch_red_url);
@@ -277,7 +290,7 @@ function get_watche_servers_from_red_link(red_link) {
                 "type": "GET",
                 "url": direct_watch_link,
                 success: function (dircet_watch_res) {
-                    $(".watch_sources").html("");
+                    $(".watch_sources,.download_sources").html("");
                     size_used = [];
 
                     $(dircet_watch_res).find("video").find("source").each(function () {
@@ -288,7 +301,13 @@ function get_watche_servers_from_red_link(red_link) {
                         if (!size_used.includes(src_size)) {
 
                             $(".watch_sources").append(`<span class="mou_btn" onclick="mouscripts.play_vid(\`${src_link}\`, \`${vid_title} - ${this_epo_num !== false ? "حلقة " + this_epo_num + " - " : ""}${src_name}\`,\`Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36\`, \`{}\`)">${src_name}</span>`);
+
+                            $(".download_sources").append(`<span class="mou_btn" onclick="add_for_downlaod(\`downloads/\`,\`${vid_title} - ${this_epo_num !== false ? "حلقة " + this_epo_num + " - " : ""}${src_name}\`, false, \`${src_link}\`,\`video\`)">${src_name}</span>`);
+
+
                             size_used.push(src_size);
+
+
                         }
 
                     });
@@ -304,6 +323,9 @@ function load_aflam(what = "") {
     if (what !== "") {
         if (what == "akowam") {
             show_akoam_cats("movies");
+            $("#header_title").text("أفلام");
+        } else if (what == "cimanow") {
+            show_cimanow_cats("movies");
             $("#header_title").text("أفلام");
         }
     }
@@ -326,7 +348,29 @@ function load_shows(what = "") {
         }
     }
 }
+function show_cimanow_cats(cat = "movies") {
+    $(".servers_btns_container").html("");
+    $.ajax({
+        "type": "GET",
+        "url": "https://cc.cimanow.cc/category/%D8%A7%D9%84%D8%A7%D9%81%D9%84%D8%A7%D9%85/",
+        success: function (res) {
+            doc = new DOMParser().parseFromString(res, "text/html");
+            $(doc).find("section").each(function () {
 
+                section_url = $(this).find("span").eq(0).find("a").attr("href");
+
+                section_title = $(this).find("span").eq(0).find("em").remove();
+                section_title = $(this).find("span").eq(0).text();
+
+                button_icon = `<i class="fas fa-film"></i>`;
+
+                $(".servers_btns_container").append(`<button class="server_btn" onclick="javascript:load_cimanow(this,'${section_url}')">${button_icon}${section_title}</button>`);
+
+            });
+
+        }
+    });
+}
 function show_akoam_cats(cat = "movies") {
 
     if (cat == "shows") {
@@ -387,8 +431,224 @@ $("#akowam_search .search_key").keypress(function (event) {
 $("#submit_search_in_akowam").click(function () {
     $(".post_content").hide();
     search_key = $("#akowam_search .search_key").val();
-    search_link = "https://to.akwam.cz/search?q=" + search_key;
+    search_link = "https://akwam.to/search?q=" + search_key;
     load_akowam(this, search_link, true);
     $("#akowam_search").closepopup();
 
 })
+
+
+var now_aflam_cats = false;
+var now_load_list_function = false;
+var now_load_film_function = false;
+var now_load_7alakat_function = false;
+var now_load_msadr_watch_function = false;
+var now_server_title = false;
+$(document).ready(function () {
+    $("#header_title").text("المشاهدة");
+    now_aflam_cats = mou_aflam_servers_array;
+    for (let i = 0; i < Object.keys(now_aflam_cats).length; i++) {
+        cat_name = Object.keys(now_aflam_cats)[i];
+        cat_val = now_aflam_cats[Object.keys(now_aflam_cats)[i]];
+        $(".servers_btns_container").append(`<button class="server_btn" onclick="load_aflam_server('${cat_name}')">${cat_val.icon} ${cat_name}</button>`);
+    }
+});
+
+
+function load_aflam_server(server_name) {
+
+    $("#header_title").text("البطل - " + server_name);
+
+    $(".servers_btns_container").html("");
+
+    for (let i = 0; i < Object.keys(now_aflam_cats).length; i++) {
+        cat_name = Object.keys(now_aflam_cats)[i];
+        cat_val = now_aflam_cats[Object.keys(now_aflam_cats)[i]];
+
+        if (cat_name == server_name) {
+            if (typeof cat_val.server_title !== "undefined") {
+                now_server_title = cat_val.server_title;
+            }
+            if (typeof cat_val.load_list_function == "function") {
+                now_load_list_function = cat_val.load_list_function;
+            }
+            if (typeof cat_val.load_film_function == "function") {
+                now_load_film_function = cat_val.load_film_function;
+            }
+            if (typeof cat_val.load_7alakat_function == "function") {
+                now_load_7alakat_function = cat_val.load_7alakat_function;
+            }
+            if (typeof cat_val.load_msadr_watch_function == "function") {
+                now_load_msadr_watch_function = cat_val.load_msadr_watch_function;
+            }
+
+            if (cat_val.type == "cats" && typeof cat_val.cats !== "undefined") {
+
+                for (let i = 0; i < Object.keys(cat_val.cats).length; i++) {
+                    cat_name = Object.keys(cat_val.cats)[i];
+                    this_cat_val = cat_val.cats[Object.keys(cat_val.cats)[i]];
+                    $(".servers_btns_container").append(`<button class="server_btn" onclick="load_aflam_server('${cat_name}')">${this_cat_val.icon} ${cat_name}</button>`);
+                }
+
+                // $(".servers_btns_container").append(`<button class="server_btn" onclick="load_aflam_server('${cat_name}')">${cat_val.icon} ${cat_name}</button>`);
+
+                now_aflam_cats = cat_val.cats;
+            } else if (cat_val.type == "list") {
+                $("#load_more_posts_btn").html("جاري التحميل");
+                $(".servers_btns_container").hide();
+                $(".server_content").show();
+                $.ajax({
+                    "type": "GET",
+                    "url": cat_val.url,
+                    success: function (res) {
+                        now_load_list_function(res, "first_load");
+                        $("#load_more_posts_btn").html("تحميل المزيد");
+                    }
+                });
+            }
+
+            break;
+        }
+    }
+
+
+
+}
+function load_aflam_posts(aflam_json, load_type) {
+    if (load_type == "first_load") {
+        $(".posts_ul").html("");
+    }
+    aflam = aflam_json.aflam;
+    for (let index = 0; index < aflam.length; index++) {
+        const film = aflam[index];
+
+
+        post_div = `<a class="vide_container my_box_shadow" data-film_title="${film.title}" data-film_url="${film.url}" data-film_img="${film.img}" data-server_title="${film.server_title}" data-film_type="${film.type}" onclick="load_film(this)"><span
+        class="vide_thump lazy_poster_img" data-poster_img="${film.img}"></span>
+    <div class="vide_disc">
+        <div class="about_vid">
+            <div class="vid_detailes_container">
+                <h3>${film.title}</h3>
+            </div>
+        </div>
+    </div>
+</a>`;
+        $(".posts_ul").append(post_div);
+    }
+    lazyload();
+    document.addEventListener("scroll", lazyload);
+    window.addEventListener("resize", lazyload);
+    window.addEventListener("orientationChange", lazyload);
+
+    if (typeof aflam_json.next_page !== "undefined") {
+        next_page = aflam_json.next_page;
+
+        $("#load_more_posts_btn").attr("onclick", `load_more_posts('${next_page}','${aflam_json.server_title}')`);
+    } else {
+        $("#load_more_posts_btn").remove();
+    }
+
+    $(document).off("scroll");
+    $(document).scroll(function () {
+        if ($('#load_more_posts_btn').length > 0) {
+            if (is_elment_in_view_port('#load_more_posts_btn', 0, 5000)) {
+                $("#load_more_posts_btn").click();
+            }
+        }
+    });
+}
+var loading_more_posts = false;
+function load_more_posts(page_url, server_title) {
+    if (loading_more_posts == false) {
+        loading_more_posts = true;
+        $.ajax({
+            "type": "GET",
+            "url": page_url,
+            success: function (res) {
+                now_load_list_function(res, "load_more");
+                loading_more_posts = false;
+            }
+        });
+    }
+
+
+}
+function load_7alakat(this_btn) {
+
+    $("#hlakat_elmoslsal_container").show();
+    $("#hlakat_elmoslsal").html("");
+    $("#moasm_elmoslsal .mou_eps_num").removeClass("activee");
+    $(this_btn).addClass("activee");
+
+    now_load_7alakat_function(this_btn);
+}
+function load_msadr_watch(watch_msdar_link, watch_type, this_btn = false) {
+
+    $("#msader_elmoshda").show();
+    $("#msader_eltahmel").show();
+    $("#hlakat_elmoslsal_container .mou_eps_num").removeClass("active");
+    if (this_btn !== false) {
+        $(this_btn).addClass("active");
+    }
+    now_load_msadr_watch_function(watch_msdar_link, watch_type);
+}
+function load_film(this_btn) {
+
+
+    $(".post_content").html(`<div class="mou_vid_container"><div class="post_img_container" style="width:200px;height: 306px;margin-bottom: 0.5rem;"><div class="loader_content"></div></div><span class="post_title" style="height: 20px;"><div class="loader_content"></div></span></div>`);
+    $(".server_content").hide();
+    $(".post_content").show();
+
+
+    film_title = $(this_btn).attr("data-film_title");
+    film_link = $(this_btn).attr("data-film_url");
+    film_img = $(this_btn).attr("data-film_img");
+    film_type = $(this_btn).attr("data-film_type");
+
+    now_load_film_function(film_title, film_img, film_link, film_type);
+}
+
+function show_film_data(film_data) {
+    table_trs = ``;
+    for (index = 0; index < Object.keys(film_data.trs).length; index++) {
+        key = Object.keys(film_data.trs)[index];
+        val = film_data.trs[key];
+        table_trs += `<tr><td>${key}</td><td>${val}</td></tr>`;
+        // console.log(key);
+    }
+
+    post_html = `<div class="mou_vid_container">
+
+        <div class="post_img_container">
+            <img src="${film_data.img}">
+        </div>
+        <span class="post_title">${film_data.title}</span>
+        <table class="mou-info-table">
+            <tbody>
+                ${table_trs}
+            </tbody>
+        </table>
+    </div>
+    <div class="mou_vid_container">
+        <h5 class="header-title">القصة</h5><span id="video_description">${film_data.description}</span>
+    </div>
+    <div class="mou_vid_container" id="moasm_elmoslsal_container" style="display:none;">
+        <h5 class="header-title">المواسم<span id="moasm_num"></span></h5>
+        <div class="halakat_btns" id="moasm_elmoslsal"></div>
+    </div>
+    <div class="mou_vid_container" id="hlakat_elmoslsal_container" style="display:none;">
+        <h5 class="header-title">الحلقات<span id="eposids_num"></span></h5>
+        <div class="halakat_btns" id="hlakat_elmoslsal"></div>
+    </div>
+    <div class="mou_vid_container" id="msader_elmoshda" style="display:none;">
+        <h5 class="header-title">مصادر المشاهدة</h5>
+        <div class="watch_sources"></div>
+    </div>
+    <div class="mou_vid_container" id="msader_eltahmel" style="display:none;">
+        <h5 class="header-title">التحميل</h5>
+        <div class="download_sources"></div>
+    </div>`;
+
+    $(".post_content").html(post_html);
+
+}

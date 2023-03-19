@@ -16,6 +16,117 @@
 <body>
     <div class="mou_background"></div>
 
+
+    <div class="sidenav" id="main_sidenav">
+        <div class="app_sidenav">
+
+            <div class="sidenav_header">
+                <img src="files/images/ic_icon.svg">
+            </div>
+            <div class="sidenav_body">
+                <div class="sidenav_btn" onclick="open_downloads()">
+                    <span class="icon"><i class="fas fa-download"></i></span>
+                    <span class="text">التنزيلات</span>
+                </div>
+                <div class="sidenav_btn" onclick="open_settings()">
+                    <span class="icon"><i class="fas fa-cog"></i></span>
+                    <span class="text">الإعدادات</span>
+                </div>
+                <div class="sidenav_btn" onclick="open_contact_us()">
+                    <span class="icon"><i class="fas fa-envelope"></i></span>
+                    <span class="text">اتصل بنا</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mou_popup full_popup" id="contact_us">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title"><i class="fas fa-envelope"></i> اتصل بنا</span>
+                <span class="close_popup_btn" data-dismisspopup><i class="far fa-times fa-lg"></i></span>
+            </div>
+            <div class="mou_popup_body">
+
+
+                <div class="mou_input_container prepend mou_box_shadow">
+                    <div class="prepend_input"><span>اسمك</span></div>
+                    <input class="rtl input placertl" id="contact_user_name" type="text">
+                </div>
+
+
+                <div class="mou_input_container prepend mou_box_shadow">
+                    <div class="prepend_input"><span>ايميلك</span></div>
+                    <input class="rtl input placertl" type="text" id="contact_email">
+                </div>
+
+                <div class="mou_input_container prepend mou_box_shadow">
+                    <div class="prepend_input"><span>الرساله</span></div>
+                    <textarea class="rtl input placertl" id="contact_message" style="min-height: 400px;"></textarea>
+                </div>
+
+                <button class="mou_btn" onclick="contact_us_submit()"><i class="fas fa-paper-plane"></i> ارسال</button>
+
+            </div>
+        </div>
+    </div>
+    <div class="mou_popup full_popup" id="downloads">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title">التنزيلات ( قيد التطوير )</span>
+                <span class="close_popup_btn" data-dismisspopup><i class="far fa-times fa-lg"></i></span>
+            </div>
+            <div class="mou_popup_body">
+
+                <div class="files" id="download_files">
+
+
+                    <!-- <div class="file" data-file_id="2">
+                        <div class="file_img">
+                            <img src="files/images/video.svg" alt="">
+                        </div>
+                        <div class="file_info_container">
+                            <div class="file_info">
+                                <span>
+                                    <span class="file_name">فيلم الفيل الأزرق</span>
+                                    <span class="err_res"></span>
+
+                                </span>
+                                <span class="download_info">
+                                    <span class="dl_full_size">521.65 MB</span>
+                                    <span class="speed">3.52 MB/s
+                                    </span>
+                                    <span class="now_size">421.65 MB</span>
+
+                                </span>
+                            </div>
+                        </div>
+                        <div class="dl_actions">
+
+                            <div class="dropdown">
+                                <span class="animate_btn dropdown_btn" onclick="open_dropdown(this)"><i
+                                        class="fas fa-ellipsis-v fa-lg"></i></span>
+                                <div class="dropdown-content">
+
+                                    <button type="button" class="btn btn-block bg-gradient-danger"
+                                        onclick="delete_dl(this)">الحذف <i
+                                            class="fas fa-trash-alt mr-1 ml-1"></i></button>
+                                </div>
+                            </div>
+
+                            <span class="animate_btn toggle_pause fa-lg"><i class="fal fa-pause-circle"></i></span>
+
+                        </div>
+                    </div> -->
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
     <div class="navigation_container">
         <div class="navigation">
             <ul>
@@ -38,9 +149,9 @@
                 <li class="list">
                     <a data-full_iframe_target_url="movies.html">
                         <span class="icon">
-                            <i class="fas fa-film"></i>
+                            <i class="fas fa-tv"></i>
                         </span>
-                        <span class="text">الأفلام</span>
+                        <span class="text">المشاهدة</span>
                     </a>
                 </li>
                 <li class="list">
@@ -60,7 +171,7 @@
         <div class="header_container">
 
             <div class="header_title_contaniner">
-                <div class="icon" style="display: none;"><i class="fas fa-bars"></i></div>
+                <div class="icon openside_nav"><i class="fas fa-bars"></i></div>
                 <div class="header_title" id="header_title">البطل</div>
             </div>
 

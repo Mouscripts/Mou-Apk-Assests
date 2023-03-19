@@ -11,35 +11,28 @@ function activeLink(elmnt, i) {
 
     $("#header_title").text("البطل");
 
-    elmnt = document.getElementById("content");
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                new_html = this.responseText;
-                new_html = $("<div>" + this.responseText + "</div>");
+    $.ajax({
+        "type": "GET",
+        "url": link,
+        success: function (res, status, xhr) {
+            if (xhr.status == 200) {
+                new_html = $("<div>" + res + "</div>");
                 $("#header_actions").html("");
                 if ($(new_html).find("#header_actions").length > 0) {
                     action_btns = $(new_html).find("#header_actions").html();
                     $("#header_actions").html(action_btns);
                     $(new_html).find("#header_actions").remove();
                 }
-
-
                 $("#content").html(new_html);
                 readypopups();
-            }
-            if (this.status == 404) {
-                elmnt.innerHTML = "Page not found.";
+            } else {
+
             }
         }
-    }
-    xhttp.open("GET", link, true);
-    xhttp.send();
-
-
+    });
 
 }
+
 
 function fix_indicator_positon(animation = true) {
     navigation_width = document.querySelectorAll(".navigation ul")[0].getBoundingClientRect().width;
@@ -68,4 +61,4 @@ list.forEach((item) => item.addEventListener("click", activeLink));
 function getElementIndex(el) {
     return [...el.parentElement.children].indexOf(el);
 }
-document.querySelectorAll(".navigation ul li.active")[0].click();
+$(".navigation ul li.active").eq(0).click();

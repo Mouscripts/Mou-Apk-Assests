@@ -6,11 +6,10 @@
     position: relative;
     margin: 4px 0;
     width: 100%;
-    /* border: solid 1px; */
-    background-image: var(--bs-gradient) !important;
     padding: 8px;
-    background: rgb(var(--mou_background));
+    color: #fff;
     box-shadow: var(--mou_custom_box_shadow);
+    background: linear-gradient(186deg, #46106e 0%, #652082 49%, #671c7a 74%, #46106e 100%);
 }
 
 .server_btn:active {
@@ -40,10 +39,11 @@
 .posts_ul {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 2fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 160px));
     grid-template-rows: 1fr;
-    grid-gap: 2px;
+    grid-gap: 10px;
     padding: 4px 0;
+    justify-content: center;
 }
 
 .vide_container {
@@ -52,8 +52,8 @@
     list-style: none;
     display: inline-block;
     overflow: hidden;
-    /* border: solid 2px; */
-    border-radius: 4px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #00000078;
 }
 
 .vide_thump:before {
@@ -90,11 +90,12 @@
 .about_vid {
     position: relative;
     display: block;
-    background-image: var(--bs-gradient) !important;
+    /* background-image: var(--bs-gradient) !important; */
+    background: linear-gradient(186deg, #46106e 0%, #652082 49%, #671c7a 74%, #46106e 100%);
 }
 
 .mou_vid_container {
-    background: linear-gradient(186deg, #343434 0%, #343434 49%, #323232 74%, #343434 100%);
+    background: linear-gradient(186deg, #46106e 0%, #652082 49%, #671c7a 74%, #46106e 100%);
     color: #fff;
     border-radius: 0.5rem;
     margin: 0;
@@ -111,6 +112,11 @@
     margin-bottom: 6px;
 }
 
+.watch_sources,
+.download_sources {
+    text-align: center;
+}
+
 .post_content {
     margin-top: 0.5rem;
     margin-right: 0.5rem;
@@ -122,11 +128,14 @@
     overflow: hidden;
     display: block;
     margin: 0 auto;
+    box-shadow: 0 0 20px #00000078;
+    border-radius: 1rem;
 }
 
 .post_content .post_img_container img {
     width: 100%;
-    border-radius: 1rem;
+    display: block;
+    height: 100%;
 }
 
 .post_content .post_title {
@@ -157,7 +166,7 @@
     border-left: 1px solid #ededed6b;
 }
 
-#hlakat_elmoslsal {
+.halakat_btns {
     position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -180,8 +189,8 @@
     cursor: pointer;
 }
 
-.mou_eps_num:not(.active):hover:after,
-.mou_eps_num.active:after {
+.mou_eps_num:not(.activee):hover:after,
+.mou_eps_num.activee:after {
     border: solid 2px;
     opacity: 1;
 }

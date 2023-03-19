@@ -1,50 +1,3 @@
-function unPack(code) {
-    function indent(code) {
-        try {
-            var tabs = 0, old = -1, add = '';
-            for (var i = 0; i < code.length; i++) {
-                if (code[i].indexOf("{") != -1) tabs++;
-                if (code[i].indexOf("}") != -1) tabs--;
-
-                if (old != tabs) {
-                    old = tabs;
-                    add = "";
-                    while (old > 0) {
-                        add += "\t";
-                        old--;
-                    }
-                    old = tabs;
-                }
-
-                code[i] = add + code[i];
-            }
-        } finally {
-            tabs = null;
-            old = null;
-            add = null;
-        }
-        return code;
-    }
-
-    var env = {
-        eval: function (c) {
-            code = c;
-        },
-        window: {},
-        document: {}
-    };
-
-    eval("with(env) {" + code + "}");
-
-    code = (code + "").replace(/;/g, ";\n").replace(/{/g, "\n{\n").replace(/}/g, "\n}\n").replace(/\n;\n/g, ";\n").replace(/\n\n/g, "\n");
-
-    code = code.split("\n");
-    code = indent(code);
-
-    code = code.join("\n");
-    return code;
-}
-
 var order_matches = true;
 loader_match_div = `<div class="match mou_box_shadow"><div class="mou_match"><div class="team team_1"><div class="team_logo"><div class="loader_content"></div></div><span class="team_name" style="width: 60%;"><div class="loader_content"></div></span></div><div class="match_center" style="grid-template-columns: 1fr;"><div><div class="loader_content"></div></div></div><div class="team team_2"><div class="team_logo"><div class="loader_content"></div></div><span class="team_name" style="width: 60%;"><div class="loader_content"></div></span></div></div></div>`;
 for (i = 0; i < 3; i++) {
@@ -505,36 +458,45 @@ async function custom_play_vid(this_btn, encoded_json) {
                     })
 
                 } else if (typeof source_action.type_of_select !== "undefined" && source_action.type_of_select == "function") {
-
                     await new Promise((resolve, reject) => {
-                        $.MouAjax({
-                            url: source_link,
-                            headers: action_headers,
-                            success: function (res) {
 
-                                var this_function_text = mou_custom_decode(source_action.function);
+                        if (source_link == "function") {
+                            var this_function_text = mou_custom_decode(source_action.function);
+                            new_function_name = "mou_func_" + Date.now();
+                            script = $(`<script data-id='${new_function_name}'>`);
+                            $(script).text(`function ${new_function_name} (callback){${this_function_text}}`);
+                            $("body").append(script);
 
-
-                                new_function_name = "mou_func_" + Date.now();
-                                script = $(`<script data-id='${new_function_name}'>`);
-                                $(script).text(`function ${new_function_name} (page_res){${this_function_text}}`);
-                                $("body").append(script);
-
-                                source_link = window[new_function_name](res);
-
+                            window[new_function_name](function (ret_url) {
+                                source_link = ret_url;
                                 $(`script[data-id='${new_function_name}']`).remove();
-
-
                                 resolve();
+                            });
+                        } else {
+                            $.MouAjax({
+                                url: source_link,
+                                headers: action_headers,
+                                success: function (res) {
+                                    var this_function_text = mou_custom_decode(source_action.function);
 
-                            }
-                        })
+                                    new_function_name = "mou_func_" + Date.now();
+                                    script = $(`<script data-id='${new_function_name}'>`);
+                                    $(script).text(`function ${new_function_name} (page_res){${this_function_text}}`);
+                                    $("body").append(script);
+
+                                    source_link = window[new_function_name](res);
+
+                                    $(`script[data-id='${new_function_name}']`).remove();
+
+
+                                    resolve();
+
+                                }
+                            })
+
+                        }
 
                     })
-
-
-
-
 
                 }
 

@@ -1,6 +1,9 @@
 // start pop_up_script
 readypopups();
 function readypopups() {
+    $("[data-openpopup]").off("click");
+    $('[data-closepopup],[data-dismisspopup]').off("click");
+    $(".mou_popup").off("click");
     $("[data-openpopup]").click(function () {
         fadein_sec = 1;
         this_popup_id = $(this).attr("data-openpopup");
@@ -11,13 +14,16 @@ function readypopups() {
         this_popup_id = $(this).parents(".mou_popup");
         $(this_popup_id).closepopup();
     });
-    $(".mou_popup").click(function () {
+    $(".mou_popup").click(function (e) {
+        if (e.target !== this) {
+            return;
+        }
+
         if ($(this).attr("data-lockpopup") !== "true") {
             $("#" + $(this).attr("id")).closepopup();
         }
-    }).children().click(function (e) {
-        return false;
-    });
+    })
+
 }
 (function ($) {
     $.fn.extend({

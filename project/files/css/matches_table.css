@@ -43,12 +43,14 @@ ul.matches_container {
     max-width: max-content;
     border-radius: 5px;
     border-right: solid 3px;
+    background: linear-gradient(186deg, #46106e 0%, #652082 49%, #671c7a 74%, #46106e 100%);
 }
 
 .match {
     position: relative;
     border-radius: 10px;
     margin-bottom: 10px;
+    background: linear-gradient(186deg, #46106e 0%, #652082 49%, #671c7a 74%, #46106e 100%);
 }
 
 .mou_icon {
@@ -113,13 +115,14 @@ ul.matches_container {
     width: max-content;
     margin: 0 auto;
     margin-bottom: 8px;
+    background: linear-gradient(186deg, #46106e 0%, #652082 49%, #671c7a 74%, #46106e 100%);
 }
 
 .ch_box .ch_name {
-    background: #006D67;
     display: block;
     padding: 4px 8px;
     color: #fff;
+    border-bottom: solid 1px #fff6;
 }
 
 .ch_box .ch_comentator {
@@ -155,7 +158,7 @@ ul.matches_container .match:after {
     height: calc(100% + 3px);
     z-index: -1;
     border-radius: 12px;
-    background-color: rgba(255, 255, 255, 0.1);
+    /* background: linear-gradient(186deg, #46106e 0%, #652082 49%, #671c7a 74%, #46106e 100%); */
 }
 
 ul.matches_container .match.animation:before,
@@ -260,9 +263,11 @@ ul.matches_container .mou_match .team_1 .team_name span {
 .countdown {
     margin-bottom: 1rem;
 }
+
 .countdown_timer {
     color: #fff;
 }
+
 .countdown_timer .title {
     line-height: 1;
     margin-bottom: 1rem;
@@ -272,14 +277,16 @@ ul.matches_container .mou_match .team_1 .team_name span {
     display: inline-block;
     margin: 0 4px;
     padding: 10px;
-    background: #232323;
+    /* background: #c31432; */
     border-radius: 3px;
+    background: linear-gradient(186deg, #46106e 0%, #652082 49%, #671c7a 74%, #46106e 100%);
+
 }
 
 .countdown_timer div .count {
     display: inline-block;
     padding: 6px 8px;
-    background: #333435;
+    background: linear-gradient(186deg, #46106e 0%, #652082 49%, #671c7a 74%, #46106e 100%);
     font-family: sans-serif;
     font-size: 1.2rem;
     font-weight: 500;
