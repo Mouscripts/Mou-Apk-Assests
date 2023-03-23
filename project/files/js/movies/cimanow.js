@@ -213,7 +213,7 @@ obj = {
             {
                 "مسلسلات رمضان": {
                     "type": "list",
-                    "url": "category/رمضان/",
+                    "url": "category/رمضان-2023/",
                     "icon": `<i class="fas fa-tv"></i>`
                 },
                 "مسلسلات عربية": {
