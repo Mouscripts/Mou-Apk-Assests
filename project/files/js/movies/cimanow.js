@@ -211,6 +211,11 @@ obj = {
             "icon": `<i class="fas fa-tv"></i>`,
             "cats":
             {
+                "مسلسلات رمضان": {
+                    "type": "list",
+                    "url": "category/رمضان/",
+                    "icon": `<i class="fas fa-tv"></i>`
+                },
                 "مسلسلات عربية": {
                     "type": "list",
                     "url": "category/مسلسلات-عربية/",
