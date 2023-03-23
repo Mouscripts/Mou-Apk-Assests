@@ -272,6 +272,11 @@ obj =
             "icon": `<i class="fas fa-tv"></i>`,
             "cats":
             {
+                "مسلسلات رمضان 2023": {
+                    "type": "list",
+                    "url": "category/مسلسلات-7series/مسلسلات-رمضان-2023/list/",
+                    "icon": `<i class="fas fa-tv"></i>`
+                },
                 "مسلسلات عربية": {
                     "type": "list",
                     "url": "category/مسلسلات/13-مسلسلات-عربيه-arabic-series/list/",
