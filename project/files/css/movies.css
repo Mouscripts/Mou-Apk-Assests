@@ -12,6 +12,19 @@
     background: linear-gradient(186deg, #46106e 0%, #652082 49%, #671c7a 74%, #46106e 100%);
 }
 
+.server_btn.online::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0)) !important;
+    background-color: #198754 !important;
+}
+
 .server_btn:active {
     transform: translateY(1px);
 }

@@ -1,8 +1,7 @@
-arab_seed_domain = "https://arbsd.click/";
-
 obj =
 {
-    "main_domain": arab_seed_domain + "",
+    "main_domain": "https://k1.arbsd.mom/",
+    "server_domain": "https://arbsed.homes/",
     "type": "cats",
     "server_title": "arabseed",
     "icon": `<i class="fas fa-film"></i>`,
@@ -33,7 +32,7 @@ obj =
             if ($(this).hasClass("current")) {
                 next_button = $(doc).find(`.pagination ul.page-numbers .page-numbers`).eq(index + 1);
                 if (next_button.length > 0) {
-                    next_page_link = arab_seed_domain + $(next_button).attr("href");
+                    next_page_link = $(next_button).attr("href");
                     aflam_json.next_page = next_page_link;
                 }
             }
@@ -155,7 +154,7 @@ obj =
         season_id = $(this_btn).attr("data-season");
         $.ajax({
             "type": "POST",
-            "url": arab_seed_domain + "wp-content/themes/Elshaikh2021/Ajaxat/Single/Episodes.php",
+            "url": "wp-content/themes/Elshaikh2021/Ajaxat/Single/Episodes.php",
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             "data": {
                 "post_id": data_id,
@@ -239,32 +238,32 @@ obj =
             {
                 "نيتفليكس – Netfilx": {
                     "type": "list",
-                    "url": arab_seed_domain + "category/netfilx",
+                    "url": "category/netfilx",
                     "icon": `<i class="fas fa-film"></i>`
                 },
                 "افلام عربية": {
                     "type": "list",
-                    "url": arab_seed_domain + "category/arabic-movies-5/",
+                    "url": "category/arabic-movies-5/",
                     "icon": `<i class="fas fa-film"></i>`
                 },
                 "افلام اجنبية": {
                     "type": "list",
-                    "url": arab_seed_domain + "category/foreign-movies4/",
+                    "url": "category/foreign-movies4/",
                     "icon": `<i class="fas fa-film"></i>`
                 },
                 "افلام تركية": {
                     "type": "list",
-                    "url": arab_seed_domain + "category/افلام-تركية/",
+                    "url": "category/افلام-تركية/",
                     "icon": `<i class="fas fa-film"></i>`
                 },
                 "افلام هندية": {
                     "type": "list",
-                    "url": arab_seed_domain + "category/indian-movies/",
+                    "url": "category/indian-movies/",
                     "icon": `<i class="fas fa-film"></i>`
                 },
                 "افلام انيميشن": {
                     "type": "list",
-                    "url": arab_seed_domain + "category/افلام-انيميشن/",
+                    "url": "category/افلام-انيميشن/",
                     "icon": `<i class="fas fa-film"></i>`
                 }
             }
@@ -276,29 +275,34 @@ obj =
             "icon": `<i class="fas fa-tv"></i>`,
             "cats":
             {
+                "مسلسلات رمضان 2023": {
+                    "type": "list",
+                    "url": "category/المسلسلات/مسلسلات-رمضان-2023/",
+                    "icon": `<i class="fas fa-tv"></i>`
+                },
                 "مسلسلات عربية": {
                     "type": "list",
-                    "url": arab_seed_domain + "category/مسلسلات-عربي/",
+                    "url": "category/مسلسلات-عربي/",
                     "icon": `<i class="fas fa-tv"></i>`
                 },
                 "مسلسلات مصريه": {
                     "type": "list",
-                    "url": arab_seed_domain + "category/مسلسلات-مصريه/",
+                    "url": "category/مسلسلات-مصريه/",
                     "icon": `<i class="fas fa-tv"></i>`
                 },
                 "مسلسلات أجنبية": {
                     "type": "list",
-                    "url": arab_seed_domain + "category/foreign-series/",
+                    "url": "category/foreign-series/",
                     "icon": `<i class="fas fa-tv"></i>`
                 },
                 "مسلسلات تركية": {
                     "type": "list",
-                    "url": arab_seed_domain + "category/turkish-series-1/",
+                    "url": "category/turkish-series-1/",
                     "icon": `<i class="fas fa-tv"></i>`
                 },
                 "مسلسلات كرتون": {
                     "type": "list",
-                    "url": arab_seed_domain + "category/مسلسلات-كرتون/",
+                    "url": "category/مسلسلات-كرتون/",
                     "icon": `<i class="fas fa-tv"></i>`
                 }
             }
@@ -349,4 +353,4 @@ function add_for_downlaod_from_arabseed(dir, full_title, typee, src_link, type, 
         }
     });
 }
-mou_aflam_servers_array["سيرفر 2"] = obj;
+mou_aflam_servers_array["عرب سيد"] = obj;

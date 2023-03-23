@@ -1,11 +1,11 @@
-$(document).ajaxSuccess(function (event, xhr, settings) {
+// $(document).ajaxSuccess(function (event, xhr, settings) {
 
-}).ajaxError(function (event, jqxhr, settings, thrownError) {
-    if (jqxhr.status == 403) {
-        settings.url = "https://webcache.googleusercontent.com/search?q=cache:" + settings.url;
-        $.ajax(settings);
-    }
-});
+// }).ajaxError(function (event, jqxhr, settings, thrownError) {
+//     if (jqxhr.status == 403) {
+//         settings.url = "https://webcache.googleusercontent.com/search?q=cache:" + settings.url;
+//         $.ajax(settings);
+//     }
+// });
 
 var search_key = "";
 function load_akowam(this_btn, link, is_search = false) {
@@ -443,24 +443,33 @@ var now_load_list_function = false;
 var now_load_film_function = false;
 var now_load_7alakat_function = false;
 var now_load_msadr_watch_function = false;
+var now_aflam_server_domain = "";
 var now_server_title = false;
 $(document).ready(function () {
     $("#header_title").text("المشاهدة");
     now_aflam_cats = mou_aflam_servers_array;
     for (let i = 0; i < Object.keys(now_aflam_cats).length; i++) {
         cat_name = Object.keys(now_aflam_cats)[i];
+        cat_name_text = "سيرفر " + (i + 1);
         cat_val = now_aflam_cats[Object.keys(now_aflam_cats)[i]];
-        $(".servers_btns_container").append(`<button class="server_btn" onclick="load_aflam_server('${cat_name}')">${cat_val.icon} ${cat_name}</button>`);
+        check_server_domain = cat_val.server_domain;
+        $(".servers_btns_container").append(`<button class="server_btn" onclick="load_aflam_server('${cat_name}')">${cat_val.icon} ${cat_name_text}</button>`);
+
+        if (check_server_domain !== "undefined") {
+            $.ajax({
+                url: check_server_domain,
+                success: function (data, textStatus, xhr) {
+                    $(`.server_btn`).eq(i).addClass("online");
+                }
+            });
+        }
     }
 });
 
 
 function load_aflam_server(server_name) {
-
     $("#header_title").text("البطل - " + server_name);
-
     $(".servers_btns_container").html("");
-
     for (let i = 0; i < Object.keys(now_aflam_cats).length; i++) {
         cat_name = Object.keys(now_aflam_cats)[i];
         cat_val = now_aflam_cats[Object.keys(now_aflam_cats)[i]];
@@ -481,6 +490,9 @@ function load_aflam_server(server_name) {
             if (typeof cat_val.load_msadr_watch_function == "function") {
                 now_load_msadr_watch_function = cat_val.load_msadr_watch_function;
             }
+            if (typeof cat_val.server_domain !== "undefined") {
+                now_aflam_server_domain = cat_val.server_domain;
+            }
 
             if (cat_val.type == "cats" && typeof cat_val.cats !== "undefined") {
 
@@ -490,8 +502,6 @@ function load_aflam_server(server_name) {
                     $(".servers_btns_container").append(`<button class="server_btn" onclick="load_aflam_server('${cat_name}')">${this_cat_val.icon} ${cat_name}</button>`);
                 }
 
-                // $(".servers_btns_container").append(`<button class="server_btn" onclick="load_aflam_server('${cat_name}')">${cat_val.icon} ${cat_name}</button>`);
-
                 now_aflam_cats = cat_val.cats;
             } else if (cat_val.type == "list") {
                 $("#load_more_posts_btn").html("جاري التحميل");
@@ -499,7 +509,7 @@ function load_aflam_server(server_name) {
                 $(".server_content").show();
                 $.ajax({
                     "type": "GET",
-                    "url": cat_val.url,
+                    "url": now_aflam_server_domain + cat_val.url,
                     success: function (res) {
                         now_load_list_function(res, "first_load");
                         $("#load_more_posts_btn").html("تحميل المزيد");

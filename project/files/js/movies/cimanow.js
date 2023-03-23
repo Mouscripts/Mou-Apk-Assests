@@ -1,8 +1,8 @@
-this_server_domain = "https://cc.cimanow.cc/";
 obj = {
     "type": "cats",
     "server_title": "cima_now",
     "icon": `<i class="fas fa-film"></i>`,
+    "server_domain": "https://a.cimanow.cc/",
     "load_list_function": function (res, load_type = "first_load") {
         aflam_json = {};
         aflam_posts = [];
@@ -179,27 +179,27 @@ obj = {
             {
                 "افلام عربية": {
                     "type": "list",
-                    "url": "https://cc.cimanow.cc/category/افلام-عربية/",
+                    "url": "category/افلام-عربية/",
                     "icon": `<i class="fas fa-film"></i>`
                 },
                 "افلام اجنبية": {
                     "type": "list",
-                    "url": "https://cc.cimanow.cc/category/افلام-اجنبية/",
+                    "url": "category/افلام-اجنبية/",
                     "icon": `<i class="fas fa-film"></i>`
                 },
                 "افلام تركية": {
                     "type": "list",
-                    "url": "https://cc.cimanow.cc/category/افلام-تركية/",
+                    "url": "category/افلام-تركية/",
                     "icon": `<i class="fas fa-film"></i>`
                 },
                 "افلام هندية": {
                     "type": "list",
-                    "url": "https://cc.cimanow.cc/category/افلام-هندية/",
+                    "url": "category/افلام-هندية/",
                     "icon": `<i class="fas fa-film"></i>`
                 },
                 "افلام انيميشن": {
                     "type": "list",
-                    "url": "https://cc.cimanow.cc/category/افلام-انيميشن/",
+                    "url": "category/افلام-انيميشن/",
                     "icon": `<i class="fas fa-film"></i>`
                 }
             }
@@ -213,12 +213,12 @@ obj = {
             {
                 "مسلسلات عربية": {
                     "type": "list",
-                    "url": "https://cc.cimanow.cc/category/مسلسلات-عربية/",
+                    "url": "category/مسلسلات-عربية/",
                     "icon": `<i class="fas fa-tv"></i>`
                 },
                 "مسلسلات أجنبية": {
                     "type": "list",
-                    "url": "https://cc.cimanow.cc/category/مسلسلات-اجنبية/",
+                    "url": "category/مسلسلات-اجنبية/",
                     "icon": `<i class="fas fa-tv"></i>`
                 }
             }
@@ -226,4 +226,4 @@ obj = {
     }
 };
 
-mou_aflam_servers_array["سيرفر 3"] = obj;
+mou_aflam_servers_array["سيما ناو"] = obj;
