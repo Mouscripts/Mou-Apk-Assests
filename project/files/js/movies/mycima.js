@@ -1,7 +1,7 @@
 obj =
 {
     "main_domain": "https://wecima.tube/",
-    "server_domain": "https://weciimaa.store/",
+    "server_domain": "https://weciimaa.lol/",
     "type": "cats",
     "server_title": "arabseed",
     "icon": `<i class="fas fa-film"></i>`,
@@ -22,6 +22,11 @@ obj =
             if (/^مشاهدة مسلسل(.*)/gm.test(film.title) == true) {
                 film.title = /^مشاهدة مسلسل(.*)/gm.exec(film.title)[1].trim();
             }
+
+            if ($(this).find(`.Episode--number`).length > 0) {
+                film.eposide = parseInt($(this).find(`.Episode--number span`).text().trim().match(/(\d+)/)[0], 10);
+            }
+
             img_style_string = $(this).find(".BG--GridItem").attr("data-lazy-style");
             film.img = /(https.*)\)/gm.exec(img_style_string)[1];
             aflam_posts.push(film);
@@ -39,6 +44,19 @@ obj =
             }
         });
         load_aflam_posts(aflam_json, load_type);
+    }, search_function: function (key) {
+        search_url = now_aflam_server_domain + "search/" + key + "/";
+        $("#load_more_posts_btn").html("جاري التحميل");
+        $(".servers_btns_container").hide();
+        $(".server_content").show();
+        $.ajax({
+            "type": "GET",
+            "url": search_url,
+            success: function (res) {
+                now_load_list_function(res, "first_load");
+                $("#load_more_posts_btn").html("تحميل المزيد");
+            }
+        });
     },
     load_film_function: function (this_btn) {
         film_title = $(this_btn).attr("data-film_title");

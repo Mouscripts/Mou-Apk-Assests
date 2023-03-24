@@ -1,7 +1,7 @@
 obj =
 {
     "main_domain": "https://k1.arbsd.mom/",
-    "server_domain": "https://arbsed.homes/",
+    "server_domain": "https://m.arabsd.lol/",
     "type": "cats",
     "server_title": "arabseed",
     "icon": `<i class="fas fa-film"></i>`,
@@ -21,7 +21,9 @@ obj =
             } else if (/^فيلم(.*)/gm.test(film.title) == true) {
                 film.title = /^فيلم(.*)/gm.exec(film.title)[1].trim();
             }
-
+            if ($(this).find(`.number`).length > 0) {
+                film.eposide = parseInt($(this).find(`.number span`).text().trim().match(/(\d+)/)[0], 10);
+            }
             film.img = $(this).find(".Poster img").attr("data-src");
             aflam_posts.push(film);
         });
@@ -33,12 +35,25 @@ obj =
                 next_button = $(doc).find(`.pagination ul.page-numbers .page-numbers`).eq(index + 1);
                 if (next_button.length > 0) {
                     next_page_link = $(next_button).attr("href");
-                    aflam_json.next_page = next_page_link;
+                    aflam_json.next_page = now_aflam_server_domain + next_page_link;
                 }
             }
         });
 
         load_aflam_posts(aflam_json, load_type);
+    }, search_function: function (key) {
+        search_url = now_aflam_server_domain + "find/?find=" + key;
+        $("#load_more_posts_btn").html("جاري التحميل");
+        $(".servers_btns_container").hide();
+        $(".server_content").show();
+        $.ajax({
+            "type": "GET",
+            "url": search_url,
+            success: function (res) {
+                now_load_list_function(res, "first_load");
+                $("#load_more_posts_btn").html("تحميل المزيد");
+            }
+        });
     },
     load_film_function: function (this_btn) {
         film_title = $(this_btn).attr("data-film_title");

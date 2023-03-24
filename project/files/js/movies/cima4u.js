@@ -22,6 +22,11 @@ obj =
             } else if (/^مشاهدة فيلم(.*)/gm.test(film.title) == true) {
                 film.title = /^مشاهدة فيلم(.*)/gm.exec(film.title)[1].trim();
             }
+
+            if ($(this).find(`.Number`).length > 0) {
+                film.eposide = parseInt($(this).find(`.Number span`).text().trim().match(/(\d+)/)[0], 10);
+            }
+
             img_style_string = $(this).find(".Thumb .Half1").attr("style");
             film.img = /(https.*)\)/gm.exec(img_style_string)[1];
             aflam_posts.push(film);
