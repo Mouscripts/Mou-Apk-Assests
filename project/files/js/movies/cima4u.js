@@ -298,11 +298,7 @@ obj =
             {
                 "مسلسلات رمضان 2023": {
                     "type": "list",
-<<<<<<< HEAD
                     "url": "category/مسلسلات-7series/مسلسلات-رمضان-2023/",
-=======
-                    "url": "category/مسلسلات-7series/مسلسلات-رمضان-2023/list/",
->>>>>>> be99de31f20406d4ac226cbb6ea8223461cf8efb
                     "icon": `<i class="fas fa-tv"></i>`
                 },
                 "مسلسلات عربية": {
