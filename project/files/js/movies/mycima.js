@@ -40,7 +40,11 @@ obj =
         });
         load_aflam_posts(aflam_json, load_type);
     },
-    load_film_function: function (film_title, film_img, film_url, page_type) {
+    load_film_function: function (this_btn) {
+        film_title = $(this_btn).attr("data-film_title");
+        film_url = $(this_btn).attr("data-film_url");
+        film_img = $(this_btn).attr("data-film_img");
+        page_type = $(this_btn).attr("data-film_type");
         $.ajax({
             "type": "GET",
             "url": film_url,
@@ -269,7 +273,7 @@ obj =
             {
                 "مسلسلات رمضان 2023": {
                     "type": "list",
-                    "url": "category/مسلسلات/مسلسلات-رمضان-2023-series-ramadan-2023/list/",
+                    "url": "category/مسلسلات/مسلسلات-رمضان-2023-series-ramadan-2023/",
                     "icon": `<i class="fas fa-tv"></i>`
                 },
                 "مسلسلات عربية": {

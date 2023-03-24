@@ -278,163 +278,31 @@ function is_elment_in_view_port(elm, top = 0, bottom = 0, left = 0, right = 0) {
     }
 }
 
-function get_watche_servers_from_red_link(red_link) {
-
-    $.ajax({
-        "type": "GET",
-        "url": red_link,
-        success: function (watch_red_res) {
-
-            direct_watch_link = $(watch_red_res).find(".page-download .download-link").attr("href");
-            $.ajax({
-                "type": "GET",
-                "url": direct_watch_link,
-                success: function (dircet_watch_res) {
-                    $(".watch_sources,.download_sources").html("");
-                    size_used = [];
-
-                    $(dircet_watch_res).find("video").find("source").each(function () {
-                        src_name = $(this).attr("size") + "p";
-                        src_link = $(this).attr("src");
-                        src_size = $(this).attr("size");
-
-                        if (!size_used.includes(src_size)) {
-
-                            $(".watch_sources").append(`<span class="mou_btn" onclick="mouscripts.play_vid(\`${src_link}\`, \`${vid_title} - ${this_epo_num !== false ? "حلقة " + this_epo_num + " - " : ""}${src_name}\`,\`Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36\`, \`{}\`)">${src_name}</span>`);
-
-                            $(".download_sources").append(`<span class="mou_btn" onclick="add_for_downlaod(\`downloads/\`,\`${vid_title} - ${this_epo_num !== false ? "حلقة " + this_epo_num + " - " : ""}${src_name}\`, false, \`${src_link}\`,\`video\`)">${src_name}</span>`);
-
-
-                            size_used.push(src_size);
-
-
-                        }
-
-                    });
-
-                }
-            });
-
-        }
-    });
-}
-
-function load_aflam(what = "") {
-    if (what !== "") {
-        if (what == "akowam") {
-            show_akoam_cats("movies");
-            $("#header_title").text("أفلام");
-        } else if (what == "cimanow") {
-            show_cimanow_cats("movies");
-            $("#header_title").text("أفلام");
-        }
-    }
-}
-function load_muslslat(what = "") {
-    if (what !== "") {
-        if (what == "akowam") {
-            show_akoam_cats("series");
-            $("#header_title").text("مسلسلات");
-
-        }
-    }
-}
-function load_shows(what = "") {
-    if (what !== "") {
-        if (what == "akowam") {
-            show_akoam_cats("shows");
-            $("#header_title").text("تلفزيون");
-
-        }
-    }
-}
-function show_cimanow_cats(cat = "movies") {
-    $(".servers_btns_container").html("");
-    $.ajax({
-        "type": "GET",
-        "url": "https://cc.cimanow.cc/category/%D8%A7%D9%84%D8%A7%D9%81%D9%84%D8%A7%D9%85/",
-        success: function (res) {
-            doc = new DOMParser().parseFromString(res, "text/html");
-            $(doc).find("section").each(function () {
-
-                section_url = $(this).find("span").eq(0).find("a").attr("href");
-
-                section_title = $(this).find("span").eq(0).find("em").remove();
-                section_title = $(this).find("span").eq(0).text();
-
-                button_icon = `<i class="fas fa-film"></i>`;
-
-                $(".servers_btns_container").append(`<button class="server_btn" onclick="javascript:load_cimanow(this,'${section_url}')">${button_icon}${section_title}</button>`);
-
-            });
-
-        }
-    });
-}
-function show_akoam_cats(cat = "movies") {
-
-    if (cat == "shows") {
-        cats = {
-            "البرامج التلفزيونية": "42",
-            "البرامج الوثائقية": "46",
-            "المسرحيات": "45",
-            "المصارعة الحرة": "43",
-        };
-    } else {
-        cats = {
-            "عربية": "29",
-            "اجنبية": "30",
-            "هندية": "31",
-            "تركية": "32",
-            "اسيوية": "33"
-        };
-    }
-
-    $(".servers_btns_container").html("");
-    for (i = 0; i < Object.keys(cats).length; i++) {
-        cat_id = cats[Object.keys(cats)[i]];
-        if (cat == "movies") {
-            button_text = "افلام " + Object.keys(cats)[i];
-            button_icon = `<i class="fas fa-film"></i>`;
-        } else if (cat == "series") {
-            button_text = "مسلسلات " + Object.keys(cats)[i];
-            button_icon = `<i class="fas fa-tv"></i>`;
-        } else if (cat == "shows") {
-            button_text = Object.keys(cats)[i];
-            button_icon = `<i class="fal fa-tv-retro"></i>`;
-        }
-
-
-        $(".servers_btns_container").append(`<button class="server_btn" onclick="javascript:load_akowam(this,'https://akwam.to/${cat}?section=${cat_id}')">${button_icon}${button_text}</button>`);
-    }
-
-    back_buttons_functions.unshift(function () {
-        $(".servers_btns_container").html(`<button class="server_btn" onclick="load_aflam('akowam')"><i class="fas fa-film"></i> أفلام
-        </button>
-        <button class="server_btn" onclick="load_muslslat('akowam')"><i class="far fa-tv"></i> مسلسلات</button>
-        <button class="server_btn" onclick="load_shows('akowam')"><i class="fal fa-tv-retro"></i> تلفزيون</button>`);
-    });
-}
 
 $("#search_in_aflam").click(function () {
-    $("#akowam_search").openpopup();
-    $("#akowam_search .search_key").focus();
+    $("#aflam_search .aflam_search_key").val("");
+    $("#aflam_search").openpopup();
+    $("#aflam_search .aflam_search_key").focus();
     back_buttons_functions.unshift(function () {
-        $("#akowam_search").closepopup();
+        $("#aflam_search").closepopup();
     });
 });
-$("#akowam_search .search_key").keypress(function (event) {
+$("#aflam_search .aflam_search_key").keypress(function (event) {
     if (event.keyCode == 13) {
-        $("#submit_search_in_akowam").click();
+        $("#submit_search_in_aflam").click();
     }
 });
-$("#submit_search_in_akowam").click(function () {
+$(document).on("click", "#submit_search_in_aflam", function () {
     $(".post_content").hide();
-    search_key = $("#akowam_search .search_key").val();
-    search_link = "https://akwam.to/search?q=" + search_key;
-    load_akowam(this, search_link, true);
-    $("#akowam_search").closepopup();
-
+    $(".posts_ul").html("");
+    $("#header_title").text("البطل - البحث");
+    search_key = $("#aflam_search .aflam_search_key").val();
+    if (search_key == "") {
+        showToast("يرجي ادخال كلمة البحث");
+    } else {
+        now_aflam_search_function(search_key);
+        $("#aflam_search").closepopup();
+    }
 })
 
 
@@ -445,6 +313,7 @@ var now_load_7alakat_function = false;
 var now_load_msadr_watch_function = false;
 var now_aflam_server_domain = "";
 var now_server_title = false;
+var now_aflam_search_function = false;
 $(document).ready(function () {
     $("#header_title").text("المشاهدة");
     now_aflam_cats = mou_aflam_servers_array;
@@ -453,13 +322,16 @@ $(document).ready(function () {
         cat_name_text = "سيرفر " + (i + 1);
         cat_val = now_aflam_cats[Object.keys(now_aflam_cats)[i]];
         check_server_domain = cat_val.server_domain;
-        $(".servers_btns_container").append(`<button class="server_btn" onclick="load_aflam_server('${cat_name}')">${cat_val.icon} ${cat_name_text}</button>`);
+
+        $(".servers_btns_container").append(`<button class="server_btn" data-check_server="${check_server_domain}" onclick="load_aflam_server('${cat_name}')" style="display:none;">${cat_val.icon} ${cat_name}</button>`);
 
         if (check_server_domain !== "undefined") {
             $.ajax({
+                type: "HEAD",
                 url: check_server_domain,
                 success: function (data, textStatus, xhr) {
-                    $(`.server_btn`).eq(i).addClass("online");
+                    $(".servers_btns_container").append($(`.server_btn[data-check_server="${this.url}"]`));
+                    $(`.server_btn[data-check_server="${this.url}"]`).show("online")
                 }
             });
         }
@@ -492,6 +364,10 @@ function load_aflam_server(server_name) {
             }
             if (typeof cat_val.server_domain !== "undefined") {
                 now_aflam_server_domain = cat_val.server_domain;
+            }
+            if (typeof cat_val.search_function !== "undefined") {
+                now_aflam_search_function = cat_val.search_function;
+                $("#search_in_aflam").show();
             }
 
             if (cat_val.type == "cats" && typeof cat_val.cats !== "undefined") {
@@ -533,7 +409,9 @@ function load_aflam_posts(aflam_json, load_type) {
         const film = aflam[index];
 
 
-        post_div = `<a class="vide_container my_box_shadow" data-film_title="${film.title}" data-film_url="${film.url}" data-film_img="${film.img}" data-server_title="${film.server_title}" data-film_type="${film.type}" onclick="load_film(this)"><span
+        post_div = $(`<a class="vide_container my_box_shadow" data-film_title="${film.title}" data-film_url="${film.url}" data-film_img="${film.img}" data-server_title="${film.server_title}" data-film_type="${film.type}" onclick="load_film(this)">
+        <div class="vide_container_overlay"></div>
+        <span
         class="vide_thump lazy_poster_img" data-poster_img="${film.img}"></span>
     <div class="vide_disc">
         <div class="about_vid">
@@ -542,8 +420,13 @@ function load_aflam_posts(aflam_json, load_type) {
             </div>
         </div>
     </div>
-</a>`;
-        $(".posts_ul").append(post_div);
+</a>`);
+        if (typeof film.eposide !== "undefined") {
+            $(post_div).find(".vide_container_overlay").append(`<a class="mou_eps_num mou_vid_container"><em>${film.eposide}</em><span>حلقة</span></a>`);
+            $(post_div).attr("data-eposide", film.eposide)
+        }
+
+        $(".posts_ul").append($(post_div));
     }
     lazyload();
     document.addEventListener("scroll", lazyload);
@@ -552,7 +435,6 @@ function load_aflam_posts(aflam_json, load_type) {
 
     if (typeof aflam_json.next_page !== "undefined") {
         next_page = aflam_json.next_page;
-
         $("#load_more_posts_btn").attr("onclick", `load_more_posts('${next_page}','${aflam_json.server_title}')`);
     } else {
         $("#load_more_posts_btn").remove();
@@ -596,9 +478,9 @@ function load_msadr_watch(watch_msdar_link, watch_type, this_btn = false) {
 
     $("#msader_elmoshda").show();
     $("#msader_eltahmel").show();
-    $("#hlakat_elmoslsal_container .mou_eps_num").removeClass("active");
+    $("#hlakat_elmoslsal_container .mou_eps_num").removeClass("activee");
     if (this_btn !== false) {
-        $(this_btn).addClass("active");
+        $(this_btn).addClass("activee");
     }
     now_load_msadr_watch_function(watch_msdar_link, watch_type);
 }
@@ -609,13 +491,7 @@ function load_film(this_btn) {
     $(".server_content").hide();
     $(".post_content").show();
 
-
-    film_title = $(this_btn).attr("data-film_title");
-    film_link = $(this_btn).attr("data-film_url");
-    film_img = $(this_btn).attr("data-film_img");
-    film_type = $(this_btn).attr("data-film_type");
-
-    now_load_film_function(film_title, film_img, film_link, film_type);
+    now_load_film_function(this_btn);
 }
 
 function show_film_data(film_data) {

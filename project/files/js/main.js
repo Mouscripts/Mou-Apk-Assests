@@ -127,7 +127,11 @@ $.MouAjax = function (params) {
         mouscripts.ajax(JSON.stringify(req_obj));
         return this;
     } else {
-        delete params.headers;
+
+        params["beforeSend"] = function (jqXHR, settings) {
+            jqXHR.setRequestHeader(key, value)
+        };
+        // delete params.headers;
         $.ajax(params);
     }
 

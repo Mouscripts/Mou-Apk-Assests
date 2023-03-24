@@ -1,7 +1,7 @@
 obj =
 {
     "main_domain": "https://www.cima4u.mx",
-    "server_domain": "https://cima4u1.yachts/",
+    "server_domain": "https://cima4u1.mom/",
     "type": "cats",
     "server_title": "cima4u",
     "icon": `<i class="fas fa-film"></i>`,
@@ -40,7 +40,25 @@ obj =
         });
         load_aflam_posts(aflam_json, load_type);
     },
-    load_film_function: function (film_title, film_img, film_url, page_type) {
+    search_function: function (key) {
+        search_url = now_aflam_server_domain + "/search/" + key + "/";
+        $("#load_more_posts_btn").html("جاري التحميل");
+        $(".servers_btns_container").hide();
+        $(".server_content").show();
+        $.ajax({
+            "type": "GET",
+            "url": search_url,
+            success: function (res) {
+                now_load_list_function(res, "first_load");
+                $("#load_more_posts_btn").html("تحميل المزيد");
+            }
+        });
+    },
+    load_film_function: function (this_btn) {
+        film_title = $(this_btn).attr("data-film_title");
+        film_url = $(this_btn).attr("data-film_url");
+        film_img = $(this_btn).attr("data-film_img");
+        page_type = $(this_btn).attr("data-film_type");
         $.ajax({
             "type": "GET",
             "url": film_url,
@@ -62,76 +80,38 @@ obj =
                 })
                 film_data.trs = film_trs;
                 show_film_data(film_data);
+                watch_url = $(doc).find(`.WatchNow`).parents("a").attr("href");
 
                 if (page_type == "film") {
-                    watch_url = $(doc).find(`.WatchNow`).parents("a").attr("href");
                     load_cima_4u_watch_server(watch_url, "film", film_url);
                 } else if (page_type == "muslsal") {
-                    if ($(doc).find(".List--Seasons--Episodes a").length > 0) {
+                    $.ajax({
+                        "type": "GET",
+                        "url": watch_url,
+                        success: function (doc) {
 
-                        $("#moasm_elmoslsal_container").show();
-                        moasm_num = $(doc).find(".List--Seasons--Episodes a").length;
-                        $("#moasm_num").text(` ( ${moasm_num} ) `);
+                            if ($(doc).find(".EpisodesSection .EpisodeItem").length > 0) {
 
-                        $(doc).find(".List--Seasons--Episodes a").each(function () {
+                                halkat_num = $(doc).find(".EpisodesSection .EpisodeItem").length;
+                                $("#eposids_num").text(` ( ${halkat_num} ) `);
+                                $(doc).find(`.EpisodesSection .EpisodeItem`).each(function () {
 
-                            moasem_dic = {
-                                1: ["الأول", "الاول", "1"],
-                                2: ["الثاني", "2"],
-                                3: ["الثالث", "3"],
-                                4: ["الرابع", "4"],
-                                5: ["الحامس", "5"],
-                                6: ["السادس", "6"],
-                                7: ["السابع", "7"],
-                                8: ["الثامن", "8"],
-                                9: ["التاسع", "9"]
-                            }
-
-                            mosem_text = $(this).text().trim();
-                            mosem_link = $(this).attr("href");
-                            if (mosem_text !== "") {
-
-                                for (i = 0; i < Object.keys(moasem_dic).length; i++) {
-                                    mosem_texts = moasem_dic[Object.keys(moasem_dic)[i]];
-                                    for (e = 0; e < mosem_texts.length; e++) {
-                                        this_mosem_text = mosem_texts[e];
-
-                                        if (mosem_text.includes(this_mosem_text)) {
-                                            mosem_num = Object.keys(moasem_dic)[i];
-                                        }
+                                    halka_num = parseInt($(this).find("span").text().trim().match(/(\d+)/)[0], 10);
+                                    epo_link = $(this).find("a").attr("href");
+                                    active_class = "";
+                                    if ($(this).hasClass("active")) {
+                                        active_class = " activee";
                                     }
-                                    if ($(this).hasClass("selected")) {
-                                        active_mosem = mosem_num;
-                                    }
-                                }
-                                $("#moasm_elmoslsal").append(`<a class="mou_eps_num" data-link="${mosem_link}" onclick="load_7alakat(this)"><em>${mosem_num}</em><span>موسم</span></a>`);
+
+                                    $("#hlakat_elmoslsal").append(`<a class="mou_eps_num${active_class}" onclick="load_cima_4u_watch_server('${epo_link}','muslsal','${epo_link}',this)"><em>${halka_num}</em><span>حلقة</span></a>`);
+                                });
+
+                                $(".mou_eps_num.activee").click();
+                                $("#hlakat_elmoslsal_container").show();
                             }
 
-                        });
-
-                        $("#moasm_elmoslsal .mou_eps_num").each(function (index) {
-                            if ($(this).find("em").text() == active_mosem) {
-                                active_mosem_index = index;
-                            }
-                        })
-                        $("#moasm_elmoslsal .mou_eps_num").eq(active_mosem_index).addClass("activee");
-                    }
-
-                    halkat_num = $(doc).find(`.Episodes--Seasons--Episodes a`).length;
-                    $("#eposids_num").text(` ( ${halkat_num} ) `);
-                    $(doc).find(`.Episodes--Seasons--Episodes a`).each(function () {
-                        halka_num = parseInt($(this).find("episodetitle").text().trim().match(/(\d+)/)[0], 10);
-                        epo_link = $(this).attr("href");
-                        active_class = "";
-                        if ($(this).hasClass("active")) {
-                            active_class = " activee";
                         }
-
-                        $("#hlakat_elmoslsal").append(`<a class="mou_eps_num${active_class}" onclick="load_cima_4u_watch_server('${epo_link}','muslsal','${epo_link}',this)"><em>${halka_num}</em><span>حلقة</span></a>`);
-                    });
-
-                    $(".mou_eps_num.activee").click();
-                    $("#hlakat_elmoslsal_container").show();
+                    })
                 }
 
             }
@@ -166,8 +146,6 @@ obj =
             }
         })
     }, load_msadr_watch_function: function (link, watch_type, referer = "") {
-
-
         $.ajax({
             "type": "GET",
             "url": link,
@@ -175,23 +153,69 @@ obj =
                 watching_doc = new DOMParser().parseFromString(watching_res, "text/html");
                 $(watching_doc).find(".serversWatchSide a").each(function () {
                     servre_name = $(this).text().trim();
-                    if (servre_name == "Up-Stream") {
+                    // if (servre_name == "Up-Stream") {
+                    //     server_link = change_subdomain(now_aflam_server_domain, "tv") + "structure/server.php?id=" + $(this).attr("data-link");
+                    //     $.ajax({
+                    //         "type": "POST",
+                    //         "url": server_link,
+                    //         success: function (structure) {
+                    //             structure_doc = new DOMParser().parseFromString(structure, "text/html");
+                    //             uptostream_link = $(structure_doc).find("iframe").attr("src");
+                    //             $.ajax({
+                    //                 "type": "GET",
+                    //                 "url": uptostream_link,
+                    //                 success: function (uptostream) {
+                    //                     uptostream_doc = new DOMParser().parseFromString(uptostream, "text/html");
+                    //                     if (/recaptchaKeyPub = .*'(.*)'/gm.test(uptostream)) {
+                    //                         recaptchaKeyPub = /recaptchaKeyPub = .*'(.*)'/gm.exec(uptostream)[1];
+
+                    //                         alert(recaptchaKeyPub);
+                    //                     }
+
+                    //                 }
+                    //             });
+
+                    //         }
+                    //     });
+                    // }
+                    if (servre_name == "Vadbam") {
                         server_link = change_subdomain(now_aflam_server_domain, "tv") + "structure/server.php?id=" + $(this).attr("data-link");
                         $.ajax({
                             "type": "POST",
                             "url": server_link,
                             success: function (structure) {
                                 structure_doc = new DOMParser().parseFromString(structure, "text/html");
-                                uptostream_link = $(structure_doc).find("iframe").attr("src");
+                                link = $(structure_doc).find("iframe").attr("src");
                                 $.ajax({
                                     "type": "GET",
-                                    "url": uptostream_link,
-                                    success: function (uptostream) {
-                                        uptostream_doc = new DOMParser().parseFromString(uptostream, "text/html");
-                                        if (/recaptchaKeyPub = .*'(.*)'/gm.test(uptostream)) {
-                                            recaptchaKeyPub = /recaptchaKeyPub = .*'(.*)'/gm.exec(uptostream)[1];
+                                    "url": link,
+                                    success: function (Vadbam) {
+                                        $(".watch_sources span,.download_sources span").remove();
+                                        // Vadbam_doc = new DOMParser().parseFromString(Vadbam, "text/html");
+                                        if (/sources:.*(\[.*\]),/gm.test(Vadbam)) {
+                                            bad_json = /sources:.*(\[.*\]),/gm.exec(Vadbam)[1];
+                                            eval(`srcs_array = ` + bad_json.replace(/\s*(['"])?([a-z0-9A-Z_\.]+)(['"])?\s*:([^,\}]+)(,)?/g, '"$2": $4$5'));
 
-                                            alert(recaptchaKeyPub);
+                                            for (i = 0; i < srcs_array.length; i++) {
+                                                src = srcs_array[i];
+
+
+                                                quality_name = src.label;
+                                                src_link = src.file;
+
+                                                src_name = quality_name;
+                                                // add_to_title = watch_type == "muslsal" ? " - موسم " + $("#moasm_elmoslsal .mou_eps_num.activee em").text() : "";
+                                                add_to_title = watch_type == "muslsal" ? " - حلقة " + $("#hlakat_elmoslsal .mou_eps_num.activee em").text() : "";
+                                                full_title = film_data.title + add_to_title + " - " + src_name;
+
+                                                $(`<span class="mou_btn" onclick="play_embed_server_from_this_server(\`${src_link}\`,\`${full_title}\`)">${src_name}</span>`).appendTo(".watch_sources");
+
+                                                $(".download_sources").append(`<span class="mou_btn" onclick="add_for_downlaod_this_server(\`downloads/\`,\`${full_title}\`, false, \`${src_link}\`,\`video\`, \`{}\`)">${src_name}</span>`);
+
+
+
+                                            }
+
                                         }
 
                                     }
@@ -272,6 +296,11 @@ obj =
             "icon": `<i class="fas fa-tv"></i>`,
             "cats":
             {
+                "مسلسلات رمضان 2023": {
+                    "type": "list",
+                    "url": "category/مسلسلات-7series/مسلسلات-رمضان-2023/",
+                    "icon": `<i class="fas fa-tv"></i>`
+                },
                 "مسلسلات عربية": {
                     "type": "list",
                     "url": "category/مسلسلات/13-مسلسلات-عربيه-arabic-series/list/",
@@ -305,15 +334,17 @@ function load_cima_4u_watch_server(link, type, referer = "", this_btn = false) {
     if (this_btn !== false) {
         $("#hlakat_elmoslsal_container .mou_eps_num").removeClass("activee");
         $(this_btn).addClass("activee");
-        $.ajax({
-            "type": "GET",
-            "url": link,
-            success: function (res) {
-                doc = new DOMParser().parseFromString(res, "text/html");
-                watch_url = $(doc).find(`.MyCimaServer btn`).attr("data-url");
-                now_load_msadr_watch_function(watch_url, type, referer);
-            }
-        });
+        console.log(link);
+        now_load_msadr_watch_function(link, type, referer);
+
+        // $.ajax({
+        //     "type": "GET",
+        //     "url": link,
+        //     success: function (res) {
+        //         doc = new DOMParser().parseFromString(res, "text/html");
+        //         watch_url = $(doc).find(`.MyCimaServer btn`).attr("data-url");
+        //     }
+        // });
     } else {
         now_load_msadr_watch_function(link, type, referer);
     }

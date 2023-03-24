@@ -11,25 +11,44 @@ obj = {
             film = {};
             $(this).find("li[aria-label='title']").find("em").remove();
             film.url = $(this).find("a[href]").attr("href");
-            film.type = film.url.includes("/selary/") ? "muslsal" : "film";
+            film.type = $(this).find(`[aria-label="episode"]`).length > 0 || film.url.includes("/selary/") ? "muslsal" : "film";
             film.title = $(this).find("li[aria-label='title']").text().trim();
             film.img = $(this).find("img").attr("data-src");
+            if ($(this).find(`[aria-label="episode"]`).length > 0) {
+                $(this).find(`[aria-label="episode"] em`).remove();
+                film.eposide = parseInt($(this).find(`[aria-label="episode"]`).text().trim().match(/(\d+)/)[0], 10);
+            }
+
             aflam_posts.push(film);
         });
         aflam_json.server_title = now_server_title;
         aflam_json.aflam = aflam_posts;
-
         next_button = $(doc).find(`ul[aria-label="pagination"] li`).eq(($(doc).find(`ul[aria-label="pagination"] li.active`).index() + 1));
-
         if (next_button.length > 0) {
             next_page_link = $(next_button).find("a[href]").attr("href");
             aflam_json.next_page = next_page_link;
         }
-
         load_aflam_posts(aflam_json, load_type);
+    }, search_function: function (key) {
+        search_url = now_aflam_server_domain + "?s=" + key;
+        $("#load_more_posts_btn").html("جاري التحميل");
+        $(".servers_btns_container").hide();
+        $(".server_content").show();
+        $.ajax({
+            "type": "GET",
+            "url": search_url,
+            success: function (res) {
+                now_load_list_function(res, "first_load");
+                $("#load_more_posts_btn").html("تحميل المزيد");
+            }
+        });
     },
-    load_film_function: function (film_title, film_img, film_url, page_type) {
-
+    load_film_function: function (this_btn) {
+        film_title = $(this_btn).attr("data-film_title");
+        film_url = $(this_btn).attr("data-film_url");
+        film_img = $(this_btn).attr("data-film_img");
+        page_type = $(this_btn).attr("data-film_type");
+        film_eposide = $(this_btn).attr("data-eposide");
         $.ajax({
             "type": "GET",
             "url": film_url,
@@ -37,13 +56,10 @@ obj = {
                 film_data = {};
                 film_trs = {};
                 doc = new DOMParser().parseFromString(res, "text/html");
-
                 film_data.title = film_title;
                 film_data.img = film_img;
                 film_data.description = $(doc).find(`section[aria-label="details"]`).find(".tabcontent#details li").eq(0).find("p").text();
-
                 $(doc).find(`section[aria-label="details"]`).find(".tabcontent#details li").eq(0).remove();
-
                 $(doc).find(`section[aria-label="details"]`).find(".tabcontent#details li").each(function () {
                     tr = {};
                     tr_key = $(this).find("strong").text().replace(":", "").trim();
@@ -53,47 +69,48 @@ obj = {
                 })
                 film_data.trs = film_trs;
                 show_film_data(film_data);
-
                 if (page_type == "film") {
-
                     load_msadr_watch(film_url, "film");
 
                 } else if (page_type == "muslsal") {
-
                     $("#moasm_elmoslsal_container").show();
-
                     moasm_num = $(doc).find(`section[aria-label="seasons"] ul li`).length;
-
                     $("#moasm_num").text(` ( ${moasm_num} ) `);
-
                     $(doc).find(`section[aria-label="seasons"] ul li`).each(function () {
-
                         $(this).find("a em").remove();
                         mosem_num = $(this).find("a").text().trim().match(/(\d+)/)[0];
-
                         epo_link = $(this).find("a").attr("href");
-
                         $("#moasm_elmoslsal").append(`<a class="mou_eps_num" data-7alkat_link="${epo_link}" onclick="load_7alakat(this)"><em>${mosem_num}</em><span>موسم</span></a>`);
+
+                        if ($(this).hasClass("active")) {
+                            active_mosem_link = epo_link;
+                        }
                     });
-
-                    $("#moasm_elmoslsal .mou_eps_num").eq(0).addClass("activee");
-
+                    if (!$(`#moasm_elmoslsal .mou_eps_num[data-7alkat_link="${active_mosem_link}"]`).hasClass("activee")) {
+                        $(`#moasm_elmoslsal .mou_eps_num[data-7alkat_link="${active_mosem_link}"]`).addClass("activee");
+                    }
+                    if (film_eposide !== "" && typeof film_eposide !== "undefined") {
+                        $(`#moasm_elmoslsal .mou_eps_num[data-7alkat_link="${active_mosem_link}"]`).click();
+                        check_7alakat_loded = setInterval(function () {
+                            if ($("#hlakat_elmoslsal .mou_eps_num").length > 0) {
+                                $("#hlakat_elmoslsal .mou_eps_num").each(function () {
+                                    if ($(this).find("em").text() == film_eposide) {
+                                        $(this).click();
+                                    }
+                                });
+                                clearInterval(check_7alakat_loded);
+                            }
+                        }, 100);
+                    }
 
                     halkat_num = $(doc).find(`#eps li`).length;
-
                     $("#eposids_num").text(` ( ${halkat_num} ) `);
-
                     $(doc).find(`#eps li`).each(function () {
-
                         halka_num = parseInt($(this).find("em").text().trim().match(/(\d+)/)[0], 10);
-
                         epo_link = $(this).find("a").attr("href");
-
                         $("#hlakat_elmoslsal").append(`<a class="mou_eps_num" onclick="load_msadr_watch('${epo_link}','muslsal',this)"><em>${halka_num}</em><span>حلقة</span></a>`);
                     });
-
                     $("#hlakat_elmoslsal_container").show();
-
                 }
 
 
@@ -148,8 +165,8 @@ obj = {
                         $(this).find("p").remove();
                         quality_name = $(this).text().trim();
                         src_name = "مصدر " + msdr_num + " - " + quality_name;
-                        add_to_title = watch_type == "muslsal" ? " - موسم " + $("#moasm_elmoslsal .mou_eps_num.active em").text() : "";
-                        add_to_title += watch_type == "muslsal" ? " - حلقة " + $("#hlakat_elmoslsal .mou_eps_num.active em").text() : "";
+                        add_to_title = watch_type == "muslsal" ? " - موسم " + $("#moasm_elmoslsal .mou_eps_num.activee em").text() : "";
+                        add_to_title += watch_type == "muslsal" ? " - حلقة " + $("#hlakat_elmoslsal .mou_eps_num.activee em").text() : "";
                         full_title = film_data.title + add_to_title + " - " + src_name;
 
                         $(".watch_sources").append(`<span class="mou_btn" onclick="mouscripts.play_vid(\`${src_link}\`, \`${full_title}\`,\`Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36\`, \`{'Referer':'https://watch26.cimanow.net/'}\`)">${src_name}</span>`);
