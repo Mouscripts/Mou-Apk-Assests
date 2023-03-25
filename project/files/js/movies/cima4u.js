@@ -1,7 +1,7 @@
 obj =
 {
-    "main_domain": "https://www.cima4u.mx",
-    "server_domain": "https://cima4u1.mom/",
+    "main_domain": "https://cima4u1.cyou",
+    "server_domain": "https://cima4u2.cfd/",
     "type": "cats",
     "server_title": "cima4u",
     "icon": `<i class="fas fa-film"></i>`,
@@ -259,75 +259,53 @@ obj =
 
     }
     ,
-    "cats":
-    {
-        "الافلام":
-        {
-            "type": "cats",
-            "icon": `<i class="fas fa-film"></i>`,
-            "cats":
-            {
-                "افلام عربية": {
-                    "type": "list",
-                    "url": "category/افلام-عربي-arabic5-movies/",
-                    "icon": `<i class="fas fa-film"></i>`
-                },
-                "افلام اجنبية": {
-                    "type": "list",
-                    "url": "category/افلام/10-movies-english-افلام-اجنبي/",
-                    "icon": `<i class="fas fa-film"></i>`
-                },
-                "افلام تركية": {
-                    "type": "list",
-                    "url": "category/افلام/افلام-تركى-turkish-films/",
-                    "icon": `<i class="fas fa-film"></i>`
-                },
-                "افلام هندية": {
-                    "type": "list",
-                    "url": "category/افلام/افلام-هندي-indian-movies/",
-                    "icon": `<i class="fas fa-film"></i>`
-                },
-                "افلام كرتون": {
-                    "type": "list",
-                    "url": "category/افلام-كرتون/",
-                    "icon": `<i class="fas fa-film"></i>`
-                }
-            }
+    "cats": function (callback) {
 
-        },
-        "المسلسلات":
-        {
-            "type": "cats",
-            "icon": `<i class="fas fa-tv"></i>`,
-            "cats":
-            {
-                "مسلسلات رمضان 2023": {
-                    "type": "list",
-                    "url": "category/مسلسلات-7series/مسلسلات-رمضان-2023/",
-                    "icon": `<i class="fas fa-tv"></i>`
-                },
-                "مسلسلات عربية": {
-                    "type": "list",
-                    "url": "category/مسلسلات/13-مسلسلات-عربيه-arabic-series/list/",
-                    "icon": `<i class="fas fa-tv"></i>`
-                },
-                "مسلسلات أجنبية": {
-                    "type": "list",
-                    "url": "category/مسلسلات/5-series-english-مسلسلات-اجنبي/list/",
-                    "icon": `<i class="fas fa-tv"></i>`
-                },
-                "مسلسلات تركية": {
-                    "type": "list",
-                    "url": "category/مسلسلات/8-مسلسلات-تركية-turkish-series/list/",
-                    "icon": `<i class="fas fa-tv"></i>`
-                },
-                "مسلسلات كرتون": {
-                    "type": "list",
-                    "url": "category/مسلسلات-كرتون/",
-                    "icon": `<i class="fas fa-tv"></i>`
-                }
+        $.ajax({
+            "type": "GET",
+            "url": now_aflam_server_domain,
+            success: function (homepage) {
+                doc = new DOMParser().parseFromString(homepage, "text/html");
+                cats_obj = {};
+                cats_obj["الافلام"] = {};
+                cats_obj["الافلام"]["type"] = "cats";
+                cats_obj["الافلام"]["icon"] = `<i class="fas fa-film"></i>`;
+                cats_obj["الافلام"]["cats"] = {};
+                cats_obj["المسلسلات"] = {};
+                cats_obj["المسلسلات"]["type"] = "cats";
+                cats_obj["المسلسلات"]["icon"] = `<i class="fas fa-film"></i>`;
+                cats_obj["المسلسلات"]["cats"] = {};
+
+                $(doc).find(".NavigationMenu > .menu-item").eq(1).find(".sub-menu li a").each(function () {
+                    link_url = $(this).attr("href").replace(/^.*\/\/[^\/]+/, '');
+                    link_text = $(this).text().trim();
+                    if (["افلام اجنبي", "افلام هندي", "افلام كرتون", "افلام اسيوية", "افلام عربي", "افلام تركية"].includes(link_text)) {
+
+                        cats_obj["الافلام"]["cats"][link_text] = {};
+                        cats_obj["الافلام"]["cats"][link_text]["type"] = "list";
+                        cats_obj["الافلام"]["cats"][link_text]["url"] = link_url;
+                        cats_obj["الافلام"]["cats"][link_text]["icon"] = `<i class="fas fa-film"></i>`;
+                    }
+                });
+
+                $(doc).find(".NavigationMenu > .menu-item").eq(2).find(".sub-menu li a").each(function () {
+                    link_url = $(this).attr("href").replace(/^.*\/\/[^\/]+/, '');
+                    link_text = $(this).text().trim();
+                    if (["مسلسلات اجنبي", "مسلسلات اسيوية", "مسلسلات كرتون", "مسلسلات تركية", "مسلسلات هندية", "مسلسلات عربية", "مسلسلات رمضان 2023", "مسلسلات لاتينية"].includes(link_text)) {
+                        cats_obj["المسلسلات"]["cats"][link_text] = {};
+                        cats_obj["المسلسلات"]["cats"][link_text]["type"] = "list";
+                        cats_obj["المسلسلات"]["cats"][link_text]["url"] = link_url;
+                        cats_obj["المسلسلات"]["cats"][link_text]["icon"] = `<i class="fas fa-film"></i>`;
+                    }
+                });
+
+                callback(cats_obj);
+
             }
-        }
+        })
+
+
+
     }
 };
 
@@ -357,7 +335,7 @@ function load_cima_4u_watch_server(link, type, referer = "", this_btn = false) {
 
 function play_embed_server_from_this_server(src_link, title) {
 
-    mouscripts.play_vid(src_link, title, `Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36`, `{}`);
+    play_vid(src_link, title, `Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36`, `{}`);
 
 
 }

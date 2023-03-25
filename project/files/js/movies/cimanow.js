@@ -1,8 +1,9 @@
 obj = {
+    "main_domain": "https://r.cimanow.cc/",
+    "server_domain": "https://r.cimanow.cc/",
     "type": "cats",
     "server_title": "cima_now",
     "icon": `<i class="fas fa-film"></i>`,
-    "server_domain": "https://a.cimanow.cc/",
     "load_list_function": function (res, load_type = "first_load") {
         aflam_json = {};
         aflam_posts = [];
@@ -169,7 +170,7 @@ obj = {
                         add_to_title += watch_type == "muslsal" ? " - حلقة " + $("#hlakat_elmoslsal .mou_eps_num.activee em").text() : "";
                         full_title = film_data.title + add_to_title + " - " + src_name;
 
-                        $(".watch_sources").append(`<span class="mou_btn" onclick="mouscripts.play_vid(\`${src_link}\`, \`${full_title}\`,\`Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36\`, \`{'Referer':'https://watch26.cimanow.net/'}\`)">${src_name}</span>`);
+                        $(".watch_sources").append(`<span class="mou_btn" onclick="play_vid(\`${src_link}\`, \`${full_title}\`,\`Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36\`, \`{'Referer':'https://watch26.cimanow.net/'}\`)">${src_name}</span>`);
 
 
                         $(".download_sources").append(`<span class="mou_btn" onclick="add_for_downlaod(\`downloads/\`,\`${full_title}\`, false, \`${src_link}\`,\`video\`, \`{'Referer':'https://cc.cimanow.cc/'}\`)">${src_name}</span>`);

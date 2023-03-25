@@ -347,3 +347,20 @@
 .file .dl_actions span.toggle_pause {
     padding-right: 8px;
 }
+
+.loading_span {
+    position: relative;
+    display: block;
+    margin: 4px 0;
+    padding: 8px;
+    color: #fff;
+    box-shadow: var(--mou_custom_box_shadow);
+    background: linear-gradient(186deg, #46106e 0%, #652082 49%, #671c7a 74%, #46106e 100%);
+    font-family: 'Noto Sans Arabic', sans-serif;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 1rem;
+}

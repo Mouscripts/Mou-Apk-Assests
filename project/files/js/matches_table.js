@@ -523,7 +523,7 @@ async function custom_play_vid(this_btn, encoded_json) {
 
     if (source_link !== "" && typeof mouscripts !== "undefined") {
 
-        mouscripts.play_vid(source_link, source_name, user_agent, JSON.stringify(vid_headers));
+        play_vid(source_link, source_name, user_agent, JSON.stringify(vid_headers));
     }
 
 }

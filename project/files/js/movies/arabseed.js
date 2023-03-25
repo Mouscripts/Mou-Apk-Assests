@@ -1,7 +1,7 @@
 obj =
 {
-    "main_domain": "https://k1.arbsd.mom/",
-    "server_domain": "https://m.arabsd.lol/",
+    "main_domain": "https://k1.arabseed.ink/",
+    "server_domain": "https://m.arbsd.pics/",
     "type": "cats",
     "server_title": "arabseed",
     "icon": `<i class="fas fa-film"></i>`,
@@ -225,7 +225,7 @@ obj =
                     $(".download_sources").append(`<span class="mou_btn" onclick="add_for_downlaod_from_arabseed(\`downloads/\`,\`${full_title}\`, false, \`${src_link}\`,\`video\`, \`{}\`)">${src_name}</span>`);
 
 
-                    // $(".watch_sources").append(`<span class="mou_btn" onclick="mouscripts.play_vid(\`${src_link}\`, \`${full_title}\`,\`Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36\`, \`{'Referer':'https://watch26.cimanow.net/'}\`)">${src_name}</span>`);
+                    // $(".watch_sources").append(`<span class="mou_btn" onclick="play_vid(\`${src_link}\`, \`${full_title}\`,\`Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36\`, \`{'Referer':'https://watch26.cimanow.net/'}\`)">${src_name}</span>`);
 
 
                     // $(".download_sources").append(`<span class="mou_btn" onclick="add_for_downlaod(\`downloads/\`,\`${full_title}\`, false, \`${src_link}\`,\`video\`, \`{'Referer':'https://cc.cimanow.cc/'}\`)">${src_name}</span>`);
@@ -356,7 +356,7 @@ function play_embed_server_from_arabseed(src_link, title) {
         success: function (embed_watching_res) {
             embed_watching_doc = new DOMParser().parseFromString(embed_watching_res, "text/html");
             this_src_link = $(embed_watching_doc).find("#player_code source").attr("src");
-            mouscripts.play_vid(this_src_link, title, `Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36`, `{}`);
+            play_vid(this_src_link, title, `Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36`, `{}`);
         }
     });
 }

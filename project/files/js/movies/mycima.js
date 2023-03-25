@@ -1,7 +1,7 @@
 obj =
 {
     "main_domain": "https://wecima.tube/",
-    "server_domain": "https://weciimaa.lol/",
+    "server_domain": "https://weciimaa.homes/",
     "type": "cats",
     "server_title": "arabseed",
     "icon": `<i class="fas fa-film"></i>`,
@@ -343,7 +343,7 @@ function load_this_watch_server(link, type, referer = "", this_btn = false) {
 
 function play_embed_server_from_this_server(src_link, title) {
 
-    mouscripts.play_vid(src_link, title, `Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36`, `{}`);
+    play_vid(src_link, title, `Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36`, `{}`);
 
 
 }
