@@ -158,21 +158,21 @@ function strtr(t, r, s) { var i, e, h, n, o = "", f = 0, p = 0, a = !1, c = "", 
 function mou_custom_encode($txt, $num = 1) {
     $default = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     $custom = "ZYXWVUTSRQPONMLKJIHGFEDCBAzyxwvutsrqponmlkjihgfedcba9876543210+/";
-    $encoded = escape($txt);
+    $encoded = $txt;
     for ($i = 1; $i <= $num; $i++) {
         $encoded = strtr(btoa($encoded), $custom, $default);
     }
-    return $encoded.replace(/\=/g, "");;
+    return $encoded;
 }
 
 function mou_custom_decode($txt, $num = 1) {
     $default = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     $custom = "ZYXWVUTSRQPONMLKJIHGFEDCBAzyxwvutsrqponmlkjihgfedcba9876543210+/";
-    $decoded = unescape(decodeURIComponent($txt));
+    $decoded = decodeURIComponent($txt);
     for ($i = 1; $i <= $num; $i++) {
         $decoded = atob(strtr($decoded, $custom, $default));
     }
-    return unescape($decoded);
+    return $decoded;
 }
 function unPack(code) {
     function indent(code) {
