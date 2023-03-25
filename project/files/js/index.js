@@ -511,7 +511,7 @@ function show_rewarded_unity(ad_id, callback) {
     window["on_unity_rewarded_end"] = callback;
 }
 function play_vid(src_link, full_title, useragent, headers) {
-    mouscripts.Show_Admob_Interstitial("ca-app-pub-1789959428115714/5652324572");
+    // mouscripts.Show_Admob_Interstitial("ca-app-pub-1789959428115714/5652324572");
     // show_rewarded_unity("Rewarded_Android", function (status) {
     //     if (status == true) {
     //         mouscripts.play_vid(src_link, full_title, useragent, headers);
