@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // $(".navigation .list").eq(2).click();
+    initializeUnityAds();
 
 });
 
