@@ -1,4 +1,4 @@
-mouscripts.initializeUnityAds();
+// mouscripts.initializeUnityAds();
 $(document).ready(function () {
 
 });
