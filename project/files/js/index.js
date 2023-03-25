@@ -1,5 +1,5 @@
+mouscripts.initializeUnityAds();
 $(document).ready(function () {
-    initializeUnityAds();
 
 });
 
