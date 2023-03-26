@@ -1,9 +1,9 @@
 obj =
 {
     "main_domain": "https://wecima.tube/",
-    "server_domain": "https://weciimaa.homes/",
+    "server_domain": "https://weciimaa.click/",
     "type": "cats",
-    "server_title": "arabseed",
+    "server_title": "My Cima",
     "icon": `<i class="fas fa-film"></i>`,
     "load_list_function": function (res, load_type = "first_load") {
         aflam_json = {};

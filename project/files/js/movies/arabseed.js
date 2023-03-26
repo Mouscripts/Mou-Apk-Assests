@@ -1,7 +1,7 @@
 obj =
 {
     "main_domain": "https://k1.arabseed.ink/",
-    "server_domain": "https://m.arbsd.pics/",
+    "server_domain": "https://arbsed.sbs/",
     "type": "cats",
     "server_title": "arabseed",
     "icon": `<i class="fas fa-film"></i>`,
